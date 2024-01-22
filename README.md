@@ -6,6 +6,7 @@ ShoppingGuide is a mobile app for efficient navigation in large stores. Enter yo
 
 ### Frontend
 - NativeScript with Angular
+- SASS
 ### Backend
 - Node.js with Express.js
 - PostgreSQL
