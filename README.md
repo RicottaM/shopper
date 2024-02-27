@@ -29,12 +29,14 @@ Will be filled soon!
 - Angular CLI 
 - NativeScript
 - Node.js
+- npm
 - JDK
+- Gradle
 - Android Studio (Not necessary but provides easy installation for required Android tools)
 
 ### 👌 The easiest way 
 
-NativeScript has a very intuitive, step-by-step instructions, so i recommend it
+NativeScript has a very intuitive, step-by-step instructions
 - 🪟 [Windows](https://docs.nativescript.org/setup/windows)
 - 🐧 [Linux](https://docs.nativescript.org/setup/linux)
 - 🍎 [macOS](https://docs.nativescript.org/setup/macos)
