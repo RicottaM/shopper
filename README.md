@@ -32,10 +32,10 @@ Will be filled soon!
 - JDK
 - Android Studio (Not necessary but provides easy installation for NativeScript tools)
 
-### The easiest way 
+### 👌 The easiest way 
 
-🔵 NativeScript has a very intuitive, step-by-step instructions, so i recommend it
-- Windows https://docs.nativescript.org/setup/windows
-- Linux https://docs.nativescript.org/setup/linux
-- macOS https://docs.nativescript.org/setup/macos 
+NativeScript has a very intuitive, step-by-step instructions, so i recommend it
+- 🪟 [Windows](https://docs.nativescript.org/setup/windows)
+- 🐧 [Linux](https://docs.nativescript.org/setup/linux)
+- 🍎 [macOS](https://docs.nativescript.org/setup/macos) 
 
