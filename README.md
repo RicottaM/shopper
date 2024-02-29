@@ -43,7 +43,7 @@ NativeScript has a very intuitive, step-by-step instructions
 
 ### ☠️ Common errors
 
-It is very important that the Gradle version is compatible with the JDK version. If running the applications fails, check the compatibility of these tools first.
+It is very important that the Gradle version is compatible with the JDK version. If running the applications fails, check the compatibility of these tools first. Also check if environment variables are set properly.
 
 | Java Version | Compilation/Testing  | Gradle Running |
 |--------------|----------------------|----------------|
