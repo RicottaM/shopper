@@ -1,0 +1,12 @@
+<ActionBar title="Bluetooth Devices">
+    <ActionItem text="{{ isScanning ? 'Stop' : 'Search' }}" (tap)="toggleScan()" ios.position="right"></ActionItem>
+  </ActionBar>
+  <ListView [items]="devices">
+    <ng-template let-device="item">
+      <StackLayout>
+        <Label text="Name: {{ device.name }}"></Label>
+        <Label text="MAC: {{ device.UUID }}"></Label>
+        <Label text="RSSI: {{ device.RSSI }}"></Label>
+      </StackLayout>
+    </ng-template>
+  </ListView>
