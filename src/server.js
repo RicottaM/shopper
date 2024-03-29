@@ -14,6 +14,6 @@ app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
 });
 
-app.get((res, req) => {
-  res.send(404);
+app.get('*', (req, res) => {
+  res.sendStatus(404);
 });
