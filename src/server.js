@@ -1,18 +1,19 @@
 import express from 'express';
 import 'dotenv/config';
-import { connectToDatabase } from './db/connect.js';
+import { DatabaseConnector } from './db/connect.js';
+import { userRouter } from './api/users/user.router.js';
 
 const app = express();
-const port = Number(process.env.SERVER_PORT);
+const port = process.env.SERVER_PORT;
 
-(async () => {
-  await connectToDatabase();
+await DatabaseConnector.connect();
 
-  app.listen(port, () => {
-    console.log(`[server]: Server is running at http://localhost:${port}`);
-  });
+app.use('/users', userRouter);
 
-  app.get((res, req) => {
-    res.send(404);
-  });
-})();
+app.listen(port, () => {
+  console.log(`[server]: Server is running at http://localhost:${port}`);
+});
+
+app.get((res, req) => {
+  res.send(404);
+});

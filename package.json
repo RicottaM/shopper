@@ -4,6 +4,7 @@
     "pg": "^8.11.3"
   },
   "type": "module",
+  "module": "commonjs",
   "devDependencies": {
     "dotenv": "^16.4.5"
   },
