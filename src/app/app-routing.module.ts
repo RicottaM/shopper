@@ -2,9 +2,10 @@ import { NgModule } from "@angular/core";
 import { Routes } from "@angular/router";
 import { NativeScriptRouterModule } from "@nativescript/angular";
 import { BluetoothComponent } from "./bluetooth/bluetooth.component";
+import { HomeComponent } from "./views/home/home.component";
 
 const routes: Routes = [
-  { path: "", redirectTo: "/bluetooth", pathMatch: "full" },
+  { path: "", component: HomeComponent },
   { path: "bluetooth", component: BluetoothComponent },
 ];
 

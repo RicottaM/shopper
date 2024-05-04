@@ -15,14 +15,17 @@ export class BluetoothComponent {
 
   constructor(private zone: NgZone) {}
 
-  public toggleScan() {
+  public scanDevices() {
     if (this.isScanning) {
       this.bluetooth.stopScanning();
+
       clearInterval(this.scanInterval);
     } else {
       this.devices = [];
       this.deviceSet.clear();
+
       let tempDevices = [];
+
       this.bluetooth.startScanning({
         onDiscovered: (peripheral: Peripheral) => {
           if (peripheral.name === "HMSoft") {
@@ -30,6 +33,7 @@ export class BluetoothComponent {
               let existingDevice = tempDevices.find(
                 (device) => device.UUID === peripheral.UUID
               );
+
               existingDevice.RSSI = peripheral.RSSI;
             } else {
               tempDevices.push(peripheral);
@@ -44,6 +48,7 @@ export class BluetoothComponent {
         });
       }, 500);
     }
+
     this.isScanning = !this.isScanning;
   }
 }

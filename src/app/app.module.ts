@@ -3,11 +3,12 @@ import { NativeScriptModule } from "@nativescript/angular";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { BluetoothComponent } from "./bluetooth/bluetooth.component";
+import { HomeComponent } from "./views/home/home.component";
 
 @NgModule({
   bootstrap: [AppComponent],
   imports: [NativeScriptModule, AppRoutingModule],
-  declarations: [AppComponent, BluetoothComponent],
+  declarations: [AppComponent, BluetoothComponent, HomeComponent],
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class AppModule {}

@@ -1,0 +1,21 @@
+/* colors: */ 
+/* Greyish Teal: #355D5E */
+/* Light Cyan: #E8FFFD */
+/* Green (RYB): #2E8913 */
+/* Light Green: #A0CBB3 */
+/* Persian Green: #013B3D */
+
+.custom-button button {
+    font-size: 30rem;
+    width: 50%;
+    border-radius: 15px;
+    padding: 200px;
+}
+
+.example {      
+    background-color: #355D5E; /* Greyish Teal */
+    background-color: #E8FFFD; /* Light Cyan */
+    background-color: #2E8913; /* Green (RYB) */
+    background-color: #A0CBB3; /* Light Green */
+    background-color: #013B3D; /* Persian Green */
+}   
