@@ -1,0 +1,25 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/Maciej/Applications/shopper/platforms/tempPlugin/core/src/main/AndroidManifest.xml:2:1-103
+INJECTED from /Users/Maciej/Applications/shopper/platforms/tempPlugin/core/src/main/AndroidManifest.xml:2:1-103
+INJECTED from /Users/Maciej/Applications/shopper/platforms/tempPlugin/core/src/main/AndroidManifest.xml:2:1-103
+	package
+		ADDED from /Users/Maciej/Applications/shopper/platforms/tempPlugin/core/src/main/AndroidManifest.xml:2:70-101
+		INJECTED from /Users/Maciej/Applications/shopper/platforms/tempPlugin/core/src/main/AndroidManifest.xml
+		INJECTED from /Users/Maciej/Applications/shopper/platforms/tempPlugin/core/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/Maciej/Applications/shopper/platforms/tempPlugin/core/src/main/AndroidManifest.xml:2:11-69
+uses-sdk
+INJECTED from /Users/Maciej/Applications/shopper/platforms/tempPlugin/core/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/Maciej/Applications/shopper/platforms/tempPlugin/core/src/main/AndroidManifest.xml
+INJECTED from /Users/Maciej/Applications/shopper/platforms/tempPlugin/core/src/main/AndroidManifest.xml
+INJECTED from /Users/Maciej/Applications/shopper/platforms/tempPlugin/core/src/main/AndroidManifest.xml
+INJECTED from /Users/Maciej/Applications/shopper/platforms/tempPlugin/core/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/Maciej/Applications/shopper/platforms/tempPlugin/core/src/main/AndroidManifest.xml
+		ADDED from /Users/Maciej/Applications/shopper/platforms/tempPlugin/core/src/main/AndroidManifest.xml
+		INJECTED from /Users/Maciej/Applications/shopper/platforms/tempPlugin/core/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/Maciej/Applications/shopper/platforms/tempPlugin/core/src/main/AndroidManifest.xml
+		ADDED from /Users/Maciej/Applications/shopper/platforms/tempPlugin/core/src/main/AndroidManifest.xml
+		INJECTED from /Users/Maciej/Applications/shopper/platforms/tempPlugin/core/src/main/AndroidManifest.xml

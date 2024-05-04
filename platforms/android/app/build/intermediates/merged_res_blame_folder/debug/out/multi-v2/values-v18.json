@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "org.nativescript.Shopper.app-mergeDebugResources-28:/values-v18/values-v18.xml",
+            "map": [
+                {
+                    "source": "/Users/Maciej/.gradle/caches/transforms-3/4045b00f67ed8f3cb74436d11e0f72a5/transformed/appcompat-1.5.1/res/values-v18/values-v18.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "48",
+                        "endOffsets": "99"
+                    }
+                }
+            ]
+        }
+    ]
+}

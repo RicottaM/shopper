@@ -1,0 +1,28 @@
+{
+    "logs": [
+        {
+            "outputFile": "org.nativescript.Shopper.app-mergeDebugResources-28:/values-v29/values-v29.xml",
+            "map": [
+                {
+                    "source": "/Users/Maciej/Applications/shopper/platforms/android/app/src/main/res/values-v29/styles.xml",
+                    "from": {
+                        "startLines": "14,4",
+                        "startColumns": "4,4",
+                        "startOffsets": "499,146",
+                        "endLines": "15,12",
+                        "endColumns": "12,12",
+                        "endOffsets": "559,493"
+                    },
+                    "to": {
+                        "startLines": "2,4",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,120",
+                        "endLines": "3,8",
+                        "endColumns": "12,12",
+                        "endOffsets": "115,255"
+                    }
+                }
+            ]
+        }
+    ]
+}

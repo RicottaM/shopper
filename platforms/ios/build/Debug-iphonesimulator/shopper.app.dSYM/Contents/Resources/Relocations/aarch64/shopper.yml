@@ -1,0 +1,31 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/Maciej/Applications/shopper/platforms/ios/build/Debug-iphonesimulator/shopper.app/shopper'
+relocations:
+  - { offsetInCU: 0x27, offset: 0x2AF67, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x10000373C, symSize: 0x2B4 }
+  - { offsetInCU: 0x4F, offset: 0x2AF8F, size: 0x8, addend: 0x0, symName: _nativescript, symObjAddr: 0x14E8, symBinAddr: 0x100A1FBB0, symSize: 0x0 }
+  - { offsetInCU: 0x7C, offset: 0x2AFBC, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x10000373C, symSize: 0x2B4 }
+  - { offsetInCU: 0x124, offset: 0x2B064, size: 0x8, addend: 0x0, symName: ___main_block_invoke, symObjAddr: 0x2B4, symBinAddr: 0x1000039F0, symSize: 0x238 }
+  - { offsetInCU: 0x27, offset: 0x2B1F5, size: 0x8, addend: 0x0, symName: '+[NativeScriptEmbedder sharedInstance]', symObjAddr: 0x0, symBinAddr: 0x100003C28, symSize: 0x80 }
+  - { offsetInCU: 0x35, offset: 0x2B203, size: 0x8, addend: 0x0, symName: '+[NativeScriptEmbedder sharedInstance]', symObjAddr: 0x0, symBinAddr: 0x100003C28, symSize: 0x80 }
+  - { offsetInCU: 0x5F, offset: 0x2B22D, size: 0x8, addend: 0x0, symName: _sharedInstance.sharedInstance, symObjAddr: 0x1608, symBinAddr: 0x100A1FBB8, symSize: 0x0 }
+  - { offsetInCU: 0x75, offset: 0x2B243, size: 0x8, addend: 0x0, symName: _sharedInstance.onceToken, symObjAddr: 0x1610, symBinAddr: 0x100A1FBC0, symSize: 0x0 }
+  - { offsetInCU: 0x160, offset: 0x2B32E, size: 0x8, addend: 0x0, symName: '___38+[NativeScriptEmbedder sharedInstance]_block_invoke', symObjAddr: 0x80, symBinAddr: 0x100003CA8, symSize: 0x4C }
+  - { offsetInCU: 0x18A, offset: 0x2B358, size: 0x8, addend: 0x0, symName: '-[NativeScriptEmbedder setDelegate:]', symObjAddr: 0xCC, symBinAddr: 0x100003CF4, symSize: 0x5C }
+  - { offsetInCU: 0x1CE, offset: 0x2B39C, size: 0x8, addend: 0x0, symName: '-[NativeScriptEmbedder delegate]', symObjAddr: 0x128, symBinAddr: 0x100003D50, symSize: 0x1C }
+  - { offsetInCU: 0x207, offset: 0x2B3D5, size: 0x8, addend: 0x0, symName: '-[NativeScriptEmbedder .cxx_destruct]', symObjAddr: 0x144, symBinAddr: 0x100003D6C, symSize: 0x30 }
+  - { offsetInCU: 0x27, offset: 0x2B4CB, size: 0x8, addend: 0x0, symName: '+[NativeScriptUtils getSystemFont:weight:italic:symbolicTraits:]', symObjAddr: 0x0, symBinAddr: 0x100003D9C, symSize: 0x10C }
+  - { offsetInCU: 0x6E, offset: 0x2B512, size: 0x8, addend: 0x0, symName: '+[NativeScriptUtils getSystemFont:weight:italic:symbolicTraits:]', symObjAddr: 0x0, symBinAddr: 0x100003D9C, symSize: 0x10C }
+  - { offsetInCU: 0xF2, offset: 0x2B596, size: 0x8, addend: 0x0, symName: '+[NativeScriptUtils createUIFont:]', symObjAddr: 0x10C, symBinAddr: 0x100003EA8, symSize: 0x928 }
+  - { offsetInCU: 0x1DA, offset: 0x2B67E, size: 0x8, addend: 0x0, symName: ___CGAffineTransformMake, symObjAddr: 0xA34, symBinAddr: 0x1000047D0, symSize: 0x54 }
+  - { offsetInCU: 0x25E, offset: 0x2B702, size: 0x8, addend: 0x0, symName: '+[NativeScriptUtils createMutableStringWithDetails:]', symObjAddr: 0xA88, symBinAddr: 0x100004824, symSize: 0x3D4 }
+  - { offsetInCU: 0x2E7, offset: 0x2B78B, size: 0x8, addend: 0x0, symName: '+[NativeScriptUtils createMutableStringForSpan:font:color:backgroundColor:textDecoration:baselineOffset:]', symObjAddr: 0xE5C, symBinAddr: 0x100004BF8, symSize: 0x308 }
+  - { offsetInCU: 0x38A, offset: 0x2B82E, size: 0x8, addend: 0x0, symName: '+[NativeScriptUtils scaleImage:width:height:scaleFactor:]', symObjAddr: 0x1164, symBinAddr: 0x100004F00, symSize: 0x140 }
+  - { offsetInCU: 0x40E, offset: 0x2B8B2, size: 0x8, addend: 0x0, symName: _CGSizeMake, symObjAddr: 0x12A4, symBinAddr: 0x100005040, symSize: 0x2C }
+  - { offsetInCU: 0x45A, offset: 0x2B8FE, size: 0x8, addend: 0x0, symName: _CGRectMake, symObjAddr: 0x12D0, symBinAddr: 0x10000506C, symSize: 0x4C }
+  - { offsetInCU: 0x4C6, offset: 0x2B96A, size: 0x8, addend: 0x0, symName: '+[NativeScriptUtils getImageData:format:quality:]', symObjAddr: 0x131C, symBinAddr: 0x1000050B8, symSize: 0x13C }
+  - { offsetInCU: 0x27, offset: 0x2BA6F, size: 0x8, addend: 0x0, symName: '-[UIView(NativeScript) nativeScriptSetTextDecorationAndTransform:textDecoration:letterSpacing:lineHeight:]', symObjAddr: 0x0, symBinAddr: 0x1000051F4, symSize: 0x874 }
+  - { offsetInCU: 0x67, offset: 0x2BAAF, size: 0x8, addend: 0x0, symName: '-[UIView(NativeScript) nativeScriptSetTextDecorationAndTransform:textDecoration:letterSpacing:lineHeight:]', symObjAddr: 0x0, symBinAddr: 0x1000051F4, symSize: 0x874 }
+  - { offsetInCU: 0x164, offset: 0x2BBAC, size: 0x8, addend: 0x0, symName: '-[UIView(NativeScript) nativeScriptSetFormattedTextDecorationAndTransform:letterSpacing:lineHeight:]', symObjAddr: 0x874, symBinAddr: 0x100005A68, symSize: 0x4D0 }
+  - { offsetInCU: 0x22A, offset: 0x2BC72, size: 0x8, addend: 0x0, symName: '-[UIView(NativeScript) nativeScriptSetFormattedTextStroke:color:]', symObjAddr: 0xD44, symBinAddr: 0x100005F38, symSize: 0x194 }
+...

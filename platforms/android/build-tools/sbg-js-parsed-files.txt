@@ -1,0 +1,5 @@
+/Users/Maciej/Applications/shopper/platforms/android/app/src/main/assets/app/runtime.js
+/Users/Maciej/Applications/shopper/platforms/android/app/src/main/assets/app/bundle.js
+/Users/Maciej/Applications/shopper/platforms/android/app/src/main/assets/app/vendor.js
+/Users/Maciej/Applications/shopper/platforms/android/app/src/main/assets/app/vendor.626190bfd112c42881b9.hot-update.js
+/Users/Maciej/Applications/shopper/platforms/android/app/src/main/assets/app/runtime.626190bfd112c42881b9.hot-update.js

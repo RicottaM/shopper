@@ -1,0 +1,102 @@
+[
+    {
+        "merged": "org.nativescript.Shopper.app-merged_res-30:/drawable-mdpi_background.png.flat",
+        "source": "org.nativescript.Shopper.app-main-32:/drawable-mdpi/background.png"
+    },
+    {
+        "merged": "org.nativescript.Shopper.app-merged_res-30:/drawable_button.xml.flat",
+        "source": "org.nativescript.Shopper.app-debug-31:/drawable/button.xml"
+    },
+    {
+        "merged": "org.nativescript.Shopper.app-merged_res-30:/drawable-xhdpi_background.png.flat",
+        "source": "org.nativescript.Shopper.app-main-32:/drawable-xhdpi/background.png"
+    },
+    {
+        "merged": "org.nativescript.Shopper.app-merged_res-30:/layout_error_activity.xml.flat",
+        "source": "org.nativescript.Shopper.app-debug-31:/layout/error_activity.xml"
+    },
+    {
+        "merged": "org.nativescript.Shopper.app-merged_res-30:/drawable_button_accented.xml.flat",
+        "source": "org.nativescript.Shopper.app-debug-31:/drawable/button_accented.xml"
+    },
+    {
+        "merged": "org.nativescript.Shopper.app-merged_res-30:/drawable-nodpi_splash_screen.xml.flat",
+        "source": "org.nativescript.Shopper.app-main-32:/drawable-nodpi/splash_screen.xml"
+    },
+    {
+        "merged": "org.nativescript.Shopper.app-merged_res-30:/layout_exception_tab.xml.flat",
+        "source": "org.nativescript.Shopper.app-debug-31:/layout/exception_tab.xml"
+    },
+    {
+        "merged": "org.nativescript.Shopper.app-merged_res-30:/drawable-ldpi_logo.png.flat",
+        "source": "org.nativescript.Shopper.app-main-32:/drawable-ldpi/logo.png"
+    },
+    {
+        "merged": "org.nativescript.Shopper.app-merged_res-30:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "org.nativescript.Shopper.app-main-32:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "org.nativescript.Shopper.app-merged_res-30:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "org.nativescript.Shopper.app-main-32:/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "org.nativescript.Shopper.app-merged_res-30:/drawable-xhdpi_logo.png.flat",
+        "source": "org.nativescript.Shopper.app-main-32:/drawable-xhdpi/logo.png"
+    },
+    {
+        "merged": "org.nativescript.Shopper.app-merged_res-30:/drawable-xxxhdpi_background.png.flat",
+        "source": "org.nativescript.Shopper.app-main-32:/drawable-xxxhdpi/background.png"
+    },
+    {
+        "merged": "org.nativescript.Shopper.app-merged_res-30:/layout_logcat_tab.xml.flat",
+        "source": "org.nativescript.Shopper.app-debug-31:/layout/logcat_tab.xml"
+    },
+    {
+        "merged": "org.nativescript.Shopper.app-merged_res-30:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "org.nativescript.Shopper.app-main-32:/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "org.nativescript.Shopper.app-merged_res-30:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "org.nativescript.Shopper.app-main-32:/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "org.nativescript.Shopper.app-merged_res-30:/drawable-ldpi_background.png.flat",
+        "source": "org.nativescript.Shopper.app-main-32:/drawable-ldpi/background.png"
+    },
+    {
+        "merged": "org.nativescript.Shopper.app-merged_res-30:/drawable-mdpi_logo.png.flat",
+        "source": "org.nativescript.Shopper.app-main-32:/drawable-mdpi/logo.png"
+    },
+    {
+        "merged": "org.nativescript.Shopper.app-merged_res-30:/drawable-xxhdpi_logo.png.flat",
+        "source": "org.nativescript.Shopper.app-main-32:/drawable-xxhdpi/logo.png"
+    },
+    {
+        "merged": "org.nativescript.Shopper.app-merged_res-30:/drawable-hdpi_background.png.flat",
+        "source": "org.nativescript.Shopper.app-main-32:/drawable-hdpi/background.png"
+    },
+    {
+        "merged": "org.nativescript.Shopper.app-merged_res-30:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "org.nativescript.Shopper.app-main-32:/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "org.nativescript.Shopper.app-merged_res-30:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "org.nativescript.Shopper.app-main-32:/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "org.nativescript.Shopper.app-merged_res-30:/drawable-xxxhdpi_logo.png.flat",
+        "source": "org.nativescript.Shopper.app-main-32:/drawable-xxxhdpi/logo.png"
+    },
+    {
+        "merged": "org.nativescript.Shopper.app-merged_res-30:/drawable-hdpi_logo.png.flat",
+        "source": "org.nativescript.Shopper.app-main-32:/drawable-hdpi/logo.png"
+    },
+    {
+        "merged": "org.nativescript.Shopper.app-merged_res-30:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "org.nativescript.Shopper.app-main-32:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "org.nativescript.Shopper.app-merged_res-30:/drawable-xxhdpi_background.png.flat",
+        "source": "org.nativescript.Shopper.app-main-32:/drawable-xxhdpi/background.png"
+    }
+]

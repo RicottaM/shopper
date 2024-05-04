@@ -1,0 +1,34 @@
+{
+    "logs": [
+        {
+            "outputFile": "org.nativescript.core-mergeReleaseResources-2:/values/values.xml",
+            "map": [
+                {
+                    "source": "/Users/Maciej/Applications/shopper/platforms/tempPlugin/core/src/main/res/values/ids.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "58",
+                        "endOffsets": "109"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "org.nativescript.core-merged_res-4:/values/values.xml",
+            "map": [
+                {
+                    "source": "/Users/Maciej/Applications/shopper/platforms/tempPlugin/core/src/main/res/values/ids.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "58",
+                        "endOffsets": "109"
+                    }
+                }
+            ]
+        }
+    ]
+}

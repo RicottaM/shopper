@@ -1,0 +1,123 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="org.nativescript.Shopper"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="23"
+8-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="33" />
+9-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml
+10
+11    <supports-screens
+11-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:5:2-9:33
+12        android:largeScreens="true"
+12-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:8:3-30
+13        android:normalScreens="true"
+13-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:7:3-31
+14        android:smallScreens="true"
+14-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:6:3-30
+15        android:xlargeScreens="true" />
+15-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:9:3-31
+16
+17    <uses-permission
+17-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:11:2-76
+18        android:name="android.permission.READ_EXTERNAL_STORAGE"
+18-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:11:19-74
+19        android:maxSdkVersion="28" />
+19-->[:widgets-release:] /Users/Maciej/.gradle/caches/transforms-3/0626ce18faa778431917b7930fef751c/transformed/jetified-widgets-release/AndroidManifest.xml:11:9-35
+20    <uses-permission
+20-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:12:2-77
+21        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+21-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:12:19-75
+22        android:maxSdkVersion="28" />
+22-->[:widgets-release:] /Users/Maciej/.gradle/caches/transforms-3/0626ce18faa778431917b7930fef751c/transformed/jetified-widgets-release/AndroidManifest.xml:14:9-35
+23    <uses-permission android:name="android.permission.INTERNET" />
+23-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:13:2-63
+23-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:13:19-61
+24    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+24-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:14:2-75
+24-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:14:19-73
+25    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+26
+27    <application
+27-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:16:2-41:16
+28        android:name="com.tns.NativeScriptApplication"
+28-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:17:3-49
+29        android:allowBackup="true"
+29-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:18:3-29
+30        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+30-->[androidx.core:core:1.8.0] /Users/Maciej/.gradle/caches/transforms-3/4147c5b2efd539ebcae63a05cac833c9/transformed/core-1.8.0/AndroidManifest.xml:24:18-86
+31        android:debuggable="true"
+32        android:extractNativeLibs="false"
+33        android:hardwareAccelerated="true"
+33-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:22:3-37
+34        android:icon="@mipmap/ic_launcher"
+34-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:19:3-37
+35        android:label="@string/app_name"
+35-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:20:3-35
+36        android:theme="@style/AppTheme" >
+36-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:21:3-34
+37        <activity
+37-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:24:3-39:14
+38            android:name="com.tns.NativeScriptActivity"
+38-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:25:4-47
+39            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout|locale|uiMode"
+39-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:27:4-120
+40            android:exported="true"
+40-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:31:4-27
+41            android:hardwareAccelerated="true"
+41-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:29:4-38
+42            android:label="@string/title_activity_kimera"
+42-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:26:4-49
+43            android:launchMode="singleTask"
+43-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:30:9-40
+44            android:theme="@style/LaunchScreenTheme" >
+44-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:28:4-44
+45            <meta-data
+45-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:33:4-87
+46                android:name="SET_THEME_ON_LAUNCH"
+46-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:33:15-49
+47                android:resource="@style/AppTheme" />
+47-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:33:50-84
+48
+49            <intent-filter>
+49-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:35:4-38:20
+50                <action android:name="android.intent.action.MAIN" />
+50-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:36:5-57
+50-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:36:13-54
+51
+52                <category android:name="android.intent.category.LAUNCHER" />
+52-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:37:5-65
+52-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:37:15-62
+53            </intent-filter>
+54        </activity>
+55        <activity android:name="com.tns.ErrorReportActivity" />
+55-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:40:3-57
+55-->/Users/Maciej/Applications/shopper/platforms/android/app/src/main/AndroidManifest.xml:40:13-55
+56
+57        <provider
+57-->[androidx.emoji2:emoji2:1.2.0] /Users/Maciej/.gradle/caches/transforms-3/4c03f80d6fe7fd530dcb7b9a43068ce6/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+58            android:name="androidx.startup.InitializationProvider"
+58-->[androidx.emoji2:emoji2:1.2.0] /Users/Maciej/.gradle/caches/transforms-3/4c03f80d6fe7fd530dcb7b9a43068ce6/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
+59            android:authorities="org.nativescript.Shopper.androidx-startup"
+59-->[androidx.emoji2:emoji2:1.2.0] /Users/Maciej/.gradle/caches/transforms-3/4c03f80d6fe7fd530dcb7b9a43068ce6/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
+60            android:exported="false" >
+60-->[androidx.emoji2:emoji2:1.2.0] /Users/Maciej/.gradle/caches/transforms-3/4c03f80d6fe7fd530dcb7b9a43068ce6/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
+61            <meta-data
+61-->[androidx.emoji2:emoji2:1.2.0] /Users/Maciej/.gradle/caches/transforms-3/4c03f80d6fe7fd530dcb7b9a43068ce6/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+62                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+62-->[androidx.emoji2:emoji2:1.2.0] /Users/Maciej/.gradle/caches/transforms-3/4c03f80d6fe7fd530dcb7b9a43068ce6/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
+63                android:value="androidx.startup" />
+63-->[androidx.emoji2:emoji2:1.2.0] /Users/Maciej/.gradle/caches/transforms-3/4c03f80d6fe7fd530dcb7b9a43068ce6/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
+64            <meta-data
+64-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/Maciej/.gradle/caches/transforms-3/12359545dbf54645a5f6eddc73ef9c42/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:31:13-33:52
+65                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+65-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/Maciej/.gradle/caches/transforms-3/12359545dbf54645a5f6eddc73ef9c42/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:32:17-78
+66                android:value="androidx.startup" />
+66-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/Maciej/.gradle/caches/transforms-3/12359545dbf54645a5f6eddc73ef9c42/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:33:17-49
+67        </provider>
+68    </application>
+69
+70</manifest>
