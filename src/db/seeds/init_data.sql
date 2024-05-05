@@ -70,6 +70,17 @@ INSERT INTO cart_items (cart_id, product_id, quantity) VALUES
     (9, 8, 1),
     (10, 10, 2);
 
+INSERT INTO locations (location_name, location_x, location_y, location_category_id) VALUES 
+('Aisle 1', 10, 20, 3), 
+('Aisle 2', 15, 25, 3), 
+('Aisle 3', 20, 30, 3), 
+('Aisle 4', 25, 35, 3), 
+('Aisle 5', 30, 40, 3), 
+('Aisle 6', 35, 45, 3), 
+('Aisle 7', 40, 50, 3), 
+('Aisle 8', 45, 55, 3), 
+('Aisle 9', 50, 60, 3), 
+('Aisle 10', 55, 65, 3);
 
 INSERT INTO product_locations (product_id, location_id) VALUES
     (1, 1), 
@@ -84,14 +95,3 @@ INSERT INTO product_locations (product_id, location_id) VALUES
     (10, 10);
 
 
-INSERT INTO locations (location_name, location_x, location_y, location_category_id) VALUES 
-('Aisle 1', 10, 20, 3), 
-('Aisle 2', 15, 25, 3), 
-('Aisle 3', 20, 30, 3), 
-('Aisle 4', 25, 35, 3), 
-('Aisle 5', 30, 40, 3), 
-('Aisle 6', 35, 45, 3), 
-('Aisle 7', 40, 50, 3), 
-('Aisle 8', 45, 55, 3), 
-('Aisle 9', 50, 60, 3), 
-('Aisle 10', 55, 65, 3);
