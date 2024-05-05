@@ -62,4 +62,15 @@ export const categoryService = {
             message: 'Category has been successfully deleted.',
         };
     },
+    getCategoryProducts: async (categoryId) => {
+        const products = await client.query(
+            `SELECT * FROM products WHERE category_id = ${categoryId};`
+        );
+
+        if (!products.rows.length) {
+            throw new ErrorWithStatus(`Couldn't find any products with given category id: ${categoryId}.`, 404);
+        }
+
+        return products.rows;
+    }
 };

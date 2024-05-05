@@ -4,6 +4,7 @@ import { DatabaseConnector } from './db/connect.js';
 import { userRouter } from './api/users/user.router.js';
 import { productRouter } from './api/products/product.router.js';
 import { categoryRouter } from './api/categories/category.router.js';
+import { locationRouter } from './api/locations/location.router.js';
 import { errorHandler } from './error/error-handler.js';
 
 const app = express();
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use('/users', userRouter);
 app.use('/products', productRouter);
 app.use('/categories', categoryRouter);
+app.use('/locations', locationRouter);
 
 app.use(errorHandler);
 

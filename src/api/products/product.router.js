@@ -8,4 +8,4 @@ productRouter.get('/:id', productController.getById);
 productRouter.post('/', productController.create);
 productRouter.put('/:id', productController.update);
 productRouter.delete('/:id', productController.delete);
-productRouter.get('/category/:categoryId', productController.getByCategoryId);
+productRouter.get('/:id/location', productController.getProductLocation);

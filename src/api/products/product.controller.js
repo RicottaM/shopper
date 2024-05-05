@@ -63,4 +63,16 @@ export const productController = {
             next(error);
         }
     },
+    getProductLocation: async (req, res, next) => {
+        try {
+            const productId = req.params.productId;
+            console.log(productId);
+
+            const location = await productService.getProductLocation(productId);
+
+            res.json(location);
+        } catch (error) {
+            next(error);
+        }
+    },
 };

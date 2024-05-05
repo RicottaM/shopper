@@ -54,4 +54,15 @@ export const categoryController = {
             next(error);
         }
     },
+    getProductsByCategoryId: async (req, res, next) => {
+        try {
+            const categoryId = req.params.categoryId;
+
+            const products = await productService.getByCategoryId(categoryId);
+
+            res.json(products);
+        } catch (error) {
+            next(error);
+        }
+    },
 };
