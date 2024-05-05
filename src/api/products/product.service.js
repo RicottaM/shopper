@@ -76,4 +76,13 @@ export const productService = {
 
         return products.rows;
     },
+    getProductLocation: async (productId) => {
+        const location = await client.query(`SELECT * FROM product_location WHERE product_id = ${productId};`);
+
+        if (!location.rows.length) {
+            throw new ErrorWithStatus(`Couldn't find any location for product with given id: ${productId}.`, 404);
+        }
+
+        return location.rows;
+    }
 };

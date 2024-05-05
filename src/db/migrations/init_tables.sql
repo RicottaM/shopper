@@ -4,6 +4,8 @@ DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS units;
 DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS product_locations
+DROP TABLE IF EXISTS locations;
 
 CREATE TABLE categories (
     category_id SERIAL PRIMARY KEY,
@@ -45,4 +47,18 @@ CREATE TABLE cart_items (
     cart_id INT REFERENCES carts(cart_id) ON DELETE CASCADE,
     product_id INT REFERENCES products(product_id) ON DELETE CASCADE,
     quantity INT NOT NULL
+);
+
+CREATE TABLE product_locations (
+    product_location_id SERIAL PRIMARY KEY,
+    product_id INT REFERENCES products(product_id) ON DELETE CASCADE
+    location_id INT REFERENCES locations(location_id) ON DELETE CASCADE
+);
+
+CREATE TABLE locations (
+    location_id SERIAL PRIMARY KEY,
+    location_name VARCHAR(255) NOT NULL,
+    location_x INT NOT NULL,
+    location_y INT NOT NULL
+    location_category_id INT REFERENCES categories(category_id) ON DELETE
 );
