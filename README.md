@@ -5,7 +5,7 @@
 1. Clone the repository to your local machine:
 
    ```bash
-   git clone https://github.com/your_username/project_name.git
+   git clone https://github.com/RicottaM/shopper.git
    ```
 
 2. Navigate to the project directory:
