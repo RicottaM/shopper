@@ -1,17 +1,29 @@
-<GridLayout rows="400, 100, 100, 100" columns="*" backgroundColor="#A0CBB3">
+<GridLayout
+  rows="auto, auto, auto, auto"
+  columns="*"
+  backgroundColor="#A0CBB3"
+  class="home-grid"
+>
   <Image
     src="~/assets/logo.jpg"
     row="0"
     col="0"
-    width="300"
-    borderRadius="100"
+    class="logo"
+    width="230"
+    borderRadius="115"
   />
-  <Label text="Welcome to Shopper!" row="1" col="0"></Label>
+  <Label
+    text="Welcome to Shopper!"
+    row="1"
+    col="0"
+    textAlignment="center"
+  ></Label>
   <Label
     text="Fill your cart, follow the trail, and make your shopping faster!"
     row="2"
     col="0"
     color="black"
+    textAlignment="center"
   ></Label>
   <Button
     text="Get Started"
