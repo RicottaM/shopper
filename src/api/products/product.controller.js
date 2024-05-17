@@ -63,13 +63,13 @@ export const productController = {
             next(error);
         }
     },
-    getProductLocation: async (req, res, next) => {
+    getBySectionId: async (req, res, next) => {
         try {
-            const productId = req.params.productId;
+            const sectionId = req.params.sectionId;
 
-            const location = await productService.getProductLocation(productId);
+            const products = await productService.getBySectionId(sectionId);
 
-            res.json(location);
+            res.json(products);
         } catch (error) {
             next(error);
         }

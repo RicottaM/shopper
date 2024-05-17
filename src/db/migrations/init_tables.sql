@@ -6,10 +6,17 @@ DROP TABLE IF EXISTS units CASCADE;
 DROP TABLE IF EXISTS categories CASCADE;
 DROP TABLE IF EXISTS product_locations CASCADE;
 DROP TABLE IF EXISTS locations CASCADE;
+DROP TABLE IF EXISTS sections CASCADE;
+
+CREATE TABLE sections (
+    section_id SERIAL PRIMARY KEY,
+    section_name VARCHAR(255) NOT NULL
+);
 
 CREATE TABLE categories (
     category_id SERIAL PRIMARY KEY,
     category_name VARCHAR(255) NOT NULL
+    section_id INT REFERENCES sections(section_id) ON DELETE CASCADE
 );
 
 CREATE TABLE units (
@@ -25,6 +32,7 @@ CREATE TABLE products (
     price DECIMAL(10,2) NOT NULL,
     category_id INT REFERENCES categories(category_id) ON DELETE CASCADE,
     availability VARCHAR(50) NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
     unit_id INT REFERENCES units(unit_id) ON DELETE CASCADE
 );
 
@@ -48,19 +56,3 @@ CREATE TABLE cart_items (
     product_id INT REFERENCES products(product_id) ON DELETE CASCADE,
     quantity INT NOT NULL
 );
-
-CREATE TABLE locations (
-    location_id SERIAL PRIMARY KEY,
-    location_name VARCHAR(255) NOT NULL,
-    location_x INT NOT NULL,
-    location_y INT NOT NULL,
-    location_category_id INT REFERENCES categories(category_id) ON DELETE CASCADE
-);
-
-CREATE TABLE product_locations (
-    product_location_id SERIAL PRIMARY KEY,
-    product_id INT REFERENCES products(product_id) ON DELETE CASCADE,
-    location_id INT REFERENCES locations(location_id) ON DELETE CASCADE
-);
-
-

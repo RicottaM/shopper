@@ -67,18 +67,13 @@ export const productService = {
             message: 'Product has been successfully deleted.',
         };
     },
-    getProductLocation: async (id) => {
-        const location = await client.query(`
-            SELECT l.location_name, l.location_x, l.location_y
-            FROM locations l
-            INNER JOIN product_locations pl ON l.location_id = pl.location_id
-            WHERE pl.product_id = ${id};
-        `);
+    getBySectionId: async (sectionId) => {
+        const products = await client.query(`SELECT * FROM products WHERE section_id = ${sectionId};`);
 
-        if (!location.rows.length) {
-            throw new ErrorWithStatus(`Couldn't find any location for product with given id: ${id}.`, 404);
+        if (!products.rows.length) {
+            throw new ErrorWithStatus(`Couldn't find any product with given section id: ${sectionId}.`, 404);
         }
 
-        return location.rows;
-    }
+        return products.rows;
+    },
 };

@@ -1,11 +1,12 @@
-import {locationService} from './location.service.js';
+import { sectionService } from './section.service.js';
+import { productService } from '../products/product.service.js';
 
-export const locationController = {
+export const sectionController = {
     getAll: async (req, res, next) => {
         try {
-            const products = await locationService.getAll();
+            const categories = await sectionService.getAll();
 
-            res.json(products);
+            res.json(categories);
         } catch (error) {
             next(error);
         }
@@ -14,16 +15,16 @@ export const locationController = {
         try {
             const id = req.params.id;
 
-            const product = await locationService.getById(id);
+            const category = await sectionService.getById(id);
 
-            res.json(product);
+            res.json(category);
         } catch (error) {
             next(error);
         }
     },
     create: async (req, res, next) => {
         try {
-            const message = await locationService.create(req.body);
+            const message = await sectionService.create(req.body);
 
             res.json(message);
         } catch (error) {
@@ -34,7 +35,7 @@ export const locationController = {
         try {
             const id = req.params.id;
 
-            const message = await locationService.update(req.body, id);
+            const message = await sectionService.update(req.body, id);
 
             res.json(message);
         } catch (error) {
@@ -45,20 +46,9 @@ export const locationController = {
         try {
             const id = req.params.id;
 
-            const message = await locationService.delete(id);
+            const message = await sectionService.delete(id);
 
             res.json(message);
-        } catch (error) {
-            next(error);
-        }
-    },
-    getByCategoryId: async (req, res, next) => {
-        try {
-            const categoryId = req.params.categoryId;
-
-            const products = await locationService.getByCategoryId(categoryId);
-
-            res.json(products);
         } catch (error) {
             next(error);
         }
