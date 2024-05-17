@@ -4,8 +4,6 @@ DROP TABLE IF EXISTS products CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS units CASCADE;
 DROP TABLE IF EXISTS categories CASCADE;
-DROP TABLE IF EXISTS product_locations CASCADE;
-DROP TABLE IF EXISTS locations CASCADE;
 DROP TABLE IF EXISTS sections CASCADE;
 
 CREATE TABLE sections (
@@ -15,7 +13,7 @@ CREATE TABLE sections (
 
 CREATE TABLE categories (
     category_id SERIAL PRIMARY KEY,
-    category_name VARCHAR(255) NOT NULL
+    category_name VARCHAR(255) NOT NULL,
     section_id INT REFERENCES sections(section_id) ON DELETE CASCADE
 );
 
