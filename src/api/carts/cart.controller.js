@@ -52,70 +52,13 @@ export const cartController = {
       next(error);
     }
   },
-  getProductsByCartId: async (req, res, next) => {
+  getCartSections: async (req, res, next) => {
     try {
-      const cartId = req.params.cartId;
+        const sections = await cartService.getCartSections();
 
-      const products = await cartService.getProductsByCartId(cartId);
-
-      res.json(products);
+        res.json(sections);
     } catch (error) {
-      next(error);
+        next(error);
     }
-  },
-  getUsersByCartId: async (req, res, next) => {
-    try {
-      const cartId = req.params.cartId;
-
-      const users = await cartService.getUsersByCartId(cartId);
-
-      res.json(users);
-    } catch (error) {
-      next(error);
-    }
-  },
-  deleteCartItems: async (req, res, next) => {
-    try {
-      const cartId = req.params.cartId;
-
-      const message = await cartService.deleteCartItem(cartId);
-
-      res.json(message);
-    } catch (error) {
-      next(error);
-    }
-  },
-  updateCartItems: async (req, res, next) => {
-    try {
-      const cartId = req.params.cartId;
-
-      const message = await cartService.updateCartItem(req.body, cartId);
-
-      res.json(message);
-    } catch (error) {
-      next(error);
-    }
-  },
-  deleteCartItem: async (req, res, next) => {
-    try {
-      const cartItemId = req.params.cartItemId;
-
-      const message = await cartService.deleteCartItem(cartItemId);
-
-      res.json(message);
-    } catch (error) {
-      next(error);
-    }
-  },
-  addCartItem: async (req, res, next) => {
-    try {
-      const cartId = req.params.cartId;
-
-      const message = await cartService.addCartItem(cartId, req.body);
-
-      res.json(message);
-    } catch (error) {
-      next(error);
-    }
-  },
+}
 };

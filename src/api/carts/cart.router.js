@@ -8,3 +8,5 @@ cartRouter.get('/:id', cartController.getById);
 cartRouter.post('/', cartController.create);
 cartRouter.put('/:id', cartController.update);
 cartRouter.delete('/:id', cartController.delete);
+cartRouter.get('/:id/sections', cartController.getCartSections);
+

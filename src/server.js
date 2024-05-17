@@ -5,6 +5,8 @@ import { userRouter } from './api/users/user.router.js';
 import { productRouter } from './api/products/product.router.js';
 import { categoryRouter } from './api/categories/category.router.js';
 import { sectionRouter } from './api/sections/section.router.js';
+import { cartItemRouter } from './api/cartItems/cartItem.router.js';
+import { cartRouter } from './api/carts/cart.router.js';
 import { errorHandler } from './error/error-handler.js';
 
 const app = express();
@@ -18,6 +20,9 @@ app.use('/users', userRouter);
 app.use('/products', productRouter);
 app.use('/categories', categoryRouter);
 app.use('/sections', sectionRouter);
+app.use('/cart-items', cartItemRouter);
+app.use('/carts', cartRouter);
+
 
 app.use(errorHandler);
 

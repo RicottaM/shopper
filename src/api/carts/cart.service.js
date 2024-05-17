@@ -63,58 +63,26 @@ export const cartService = {
       message: 'Cart has been successfully deleted.',
     };
   },
-  getCartItems: async (cartId) => {
-    const cartItems = await client.query(`SELECT * FROM cart_items WHERE cart_id = ${cartId};`);
-
+  getCartSections: async (cartId) => {
+    const cartItems = await client.query(`SELECT product_id FROM cart_items WHERE cart_id = ${cartId};`);
     if (!cartItems.rows.length) {
-      throw new ErrorWithStatus(`Couldn't find any cart items for cart with id: ${cartId}.`, 404);
+        throw new ErrorWithStatus(`Couldn't find any cart item in cart with given id: ${cartId}.`, 404);
     }
-
-    return cartItems.rows;
-  },
-  addCartItem: async (cartId, newCartItem) => {
-    const { product_id, quantity } = newCartItem;
-
-    const cartItem = await client.query(
-      `INSERT INTO cart_items (cart_id, product_id, quantity) VALUES (${cartId}, ${product_id}, ${quantity});`
-    );
-
-    if (!cartItem.rows.length) {
-      throw new ErrorWithStatus(`Couldn't add new cart item with given data:\n${newCartItem}`, 400);
+    
+    const productIds = cartItems.rows.map((item) => item.product_id);
+    
+    const categoryIds = await client.query(`SELECT category_id FROM products WHERE product_id IN (${productIds.join(',')});`);
+    if (!categoryIds.rows.length) {
+        throw new ErrorWithStatus(`Couldn't find any category for the products in the cart.`, 404);
     }
-
-    return {
-      message: 'Cart item has been successfully added.',
-    };
-  },
-  updateCartItem: async (cartItemId, updatedCartItem) => {
-    const { product_id, quantity } = updatedCartItem;
-    let updatedFields = [];
-
-    if (product_id) updatedFields.push(`product_id = ${product_id}`);
-    if (quantity) updatedFields.push(`quantity = ${quantity}`);
-
-    const updateQuery = `UPDATE cart_items SET ${updatedFields.join(', ')} WHERE cart_item_id = ${cartItemId};`;
-
-    const cartItem = await client.query(updateQuery);
-
-    if (!cartItem.rows.length) {
-      throw new ErrorWithStatus(`Couldn't find cart item with given id: ${cartItemId}.`, 404);
+    
+    const categoryIdsArray = categoryIds.rows.map((item) => item.category_id);
+    
+    const sectionIds = await client.query(`SELECT section_id FROM categories WHERE category_id IN (${categoryIdsArray.join(',')});`);
+    if (!sectionIds.rows.length) {
+        throw new ErrorWithStatus(`Couldn't find any section for the categories of the products in the cart.`, 404);
     }
-
-    return {
-      message: 'Cart item has been successfully updated.',
-    };
-  },
-  deleteCartItem: async (cartItemId) => {
-    const cartItem = await client.query(`DELETE FROM cart_items WHERE cart_item_id = ${cartItemId};`);
-
-    if (!cartItem.rows.length) {
-      throw new ErrorWithStatus(`Couldn't find cart item with given id: ${cartItemId}.`, 404);
-    }
-
-    return {
-      message: 'Cart item has been successfully deleted.',
-    };
+    
+    return sectionIds.rows;
   },
 };
