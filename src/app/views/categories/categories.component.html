@@ -1,7 +1,7 @@
 <GridLayout
   rows="auto, auto, auto, auto"
-  columns="*"
+  columns="*, *"
   backgroundColor="#A0CBB3"
-  class="grid"
 >
+  <Label *ngFor="let category of categories" [text]="category.name"></Label>
 </GridLayout>
