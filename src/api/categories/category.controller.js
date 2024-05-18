@@ -1,6 +1,5 @@
 import { categoryService } from './category.service.js';
 import { productService } from '../products/product.service.js';
-import { userService } from '../users/user.service.js';
 
 export const categoryController = {
     getAll: async (req, res, next) => {

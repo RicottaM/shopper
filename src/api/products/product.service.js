@@ -76,4 +76,13 @@ export const productService = {
 
         return products.rows;
     },
+    getByCategoryId: async (categoryId) => {
+        const products = await client.query(`SELECT * FROM products WHERE category_id = ${categoryId};`);
+
+        if (!products.rows.length) {
+            throw new ErrorWithStatus(`Couldn't find any product with given category id: ${categoryId}.`, 404);
+        }
+
+        return products.rows;
+    },
 };
