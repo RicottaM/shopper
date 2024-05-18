@@ -54,7 +54,8 @@ export const cartController = {
   },
   getCartSections: async (req, res, next) => {
     try {
-        const sections = await cartService.getCartSections();
+        const id = req.params.id;
+        const sections = await cartService.getCartSections(id);
 
         res.json(sections);
     } catch (error) {
