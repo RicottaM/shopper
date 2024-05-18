@@ -17,6 +17,7 @@
     "@nativescript/angular": "^16.0.0",
     "@nativescript/core": "~8.6.0",
     "@nativescript/theme": "~3.0.2",
+    "nativescript-fontawesome": "^1.0.0",
     "rxjs": "~7.8.0",
     "zone.js": "~0.13.0"
   },

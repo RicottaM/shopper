@@ -1,4 +1,9 @@
-<GridLayout rows="auto, auto, auto, auto" columns="*" backgroundColor="#A0CBB3">
+<GridLayout
+  rows="auto, auto, auto, auto"
+  columns="*"
+  backgroundColor="#A0CBB3"
+  class="grid"
+>
   <Image
     src="~/assets/logo.jpg"
     row="0"
@@ -13,6 +18,7 @@
     text="Welcome to Shopper"
     row="1"
     col="0"
+    colSpan="2"
     textAlignment="center"
     fontSize="30dp"
     fontWeight="bold"
@@ -22,11 +28,11 @@
   ></Label>
   <TextView
     text="Fill your cart, follow the trail, and make your shopping faster!"
+    color="#013b3d"
+    fontSize="20dp"
     row="2"
     col="0"
-    color="#013b3d"
     textAlignment="center"
-    fontSize="20dp"
     marginBottom="60dp"
     editable="false"
   ></TextView>
@@ -34,12 +40,13 @@
     text="Get Started"
     color="#013b3d"
     backgroundColor="#E8FEFD"
+    fontSize="25dp"
     row="3"
     col="0"
-    fontSize="25dp"
-    width="220dp"
+    width="210dp"
     height="70dp"
     borderRadius="25dp"
-    fontWeight="bold"
+    fontWeight="400"
+    (tap)="goToCategories()"
   ></Button>
 </GridLayout>
