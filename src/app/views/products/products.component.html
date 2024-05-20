@@ -19,44 +19,18 @@
   ></TextField>
 
   <ScrollView row="1" col="0" colSpan="2" height="675dp" marginTop="20dp">
-    <GridLayout columns="*, *">
-      <StackLayout col="0">
-        <ng-container
-          *ngFor="
-            let category of categories.slice(0, categories.length / 2);
-            let i = index
-          "
-        >
-          <TextView
-            [text]="category.category_name"
-            textAlignment="center"
-            marginTop="10dp"
-            fontSize="20dp"
-            editable="false"
-            color="#013b3d"
-            (tap)="goToProducts(category.category_id)"
-          ></TextView>
-        </ng-container>
-      </StackLayout>
-      <StackLayout col="1">
-        <ng-container
-          *ngFor="
-            let category of categories.slice(categories.length / 2);
-            let i = index
-          "
-        >
-          <TextView
-            [text]="category.category_name"
-            textAlignment="center"
-            marginTop="10dp"
-            fontSize="20dp"
-            editable="false"
-            color="#013b3d"
-            (tap)="goToProducts(category.category_id)"
-          ></TextView>
-        </ng-container>
-      </StackLayout>
-    </GridLayout>
+    <StackLayout col="0">
+      <ng-container *ngFor="let product of products">
+        <TextView
+          [text]="product.name"
+          textAlignment="center"
+          marginTop="10dp"
+          fontSize="20dp"
+          editable="false"
+          color="#013b3d"
+        ></TextView>
+      </ng-container>
+    </StackLayout>
   </ScrollView>
 
   <StackLayout
@@ -66,14 +40,14 @@
     horizontalAlignment="center"
   >
     <Button
-      text="Map"
+      text="Categories"
       backgroundColor="#E8FEFD"
       color="#013b3d"
       fontSize="20dp"
       padding="20dp"
-      width="100dp"
       borderRadius="25dp"
       margin="10dp"
+      (tap)="goToCategories()"
     ></Button>
     <Button
       text="Home"

@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
+import { Page } from "@nativescript/core";
 
 @Component({
   selector: "Home",
@@ -7,7 +8,9 @@ import { Router } from "@angular/router";
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private page: Page) {
+    this.page.actionBarHidden = true;
+  }
 
   goToCategories(): void {
     this.router.navigate(["/categories"]);
