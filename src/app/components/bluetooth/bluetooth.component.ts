@@ -12,18 +12,17 @@ export class BluetoothComponent {
   private deviceSet = new Set<string>();
   public isScanning = false;
   private scanInterval: any;
+  public sortedDevices: Array<Peripheral> = [];
 
   constructor(private zone: NgZone) {}
 
   public scanDevices() {
     if (this.isScanning) {
       this.bluetooth.stopScanning();
-
       clearInterval(this.scanInterval);
     } else {
       this.devices = [];
       this.deviceSet.clear();
-
       let tempDevices = [];
 
       this.bluetooth.startScanning({
@@ -33,7 +32,6 @@ export class BluetoothComponent {
               let existingDevice = tempDevices.find(
                 (device) => device.UUID === peripheral.UUID
               );
-
               existingDevice.RSSI = peripheral.RSSI;
             } else {
               tempDevices.push(peripheral);
@@ -42,13 +40,22 @@ export class BluetoothComponent {
           }
         },
       });
+
       this.scanInterval = setInterval(() => {
         this.zone.run(() => {
           this.devices = [...tempDevices];
+          this.sortedDevices = [...this.devices].sort((a, b) => b.RSSI - a.RSSI);
+          this.displayClosestDevice();
         });
       }, 500);
     }
 
     this.isScanning = !this.isScanning;
+  }
+
+  public displayClosestDevice() {
+    if (this.sortedDevices.length > 0) {
+      console.log(`Closest device MAC: ${this.sortedDevices[0].UUID}`);
+    }
   }
 }
