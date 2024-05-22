@@ -10,3 +10,4 @@ productRouter.put('/:id', productController.update);
 productRouter.delete('/:id', productController.delete);
 productRouter.get('/section/:sectionId', productController.getBySectionId);
 productRouter.get('/category/:categoryId', productController.getByCategoryId);
+productRouter.get('/:id/unit', productController.getUnit);

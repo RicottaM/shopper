@@ -85,4 +85,8 @@ export const productService = {
 
         return products.rows;
     },
+    getUnit: async (productId) => {
+        const unit = await client.query(`SELECT unit_symbol FROM units WHERE unit_id in (SELECT unit_id FROM products WHERE product_id = ${productId});`);
+        return unit.rows;
+    },
 };

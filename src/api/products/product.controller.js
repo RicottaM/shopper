@@ -74,4 +74,15 @@ export const productController = {
             next(error);
         }
     },
+    getUnit: async (req, res, next) => {
+        try {
+            const productId = req.params.id;
+
+            const unit = await productService.getUnit(productId);
+
+            res.json(unit);
+        } catch (error) {
+            next(error);
+        }
+    },
 };
