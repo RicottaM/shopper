@@ -13,7 +13,15 @@ export class BluetoothComponent {
   public isScanning = false;
   private scanInterval: any;
   public sortedDevices: Array<Peripheral> = [];
-
+  private macToNameMapping = {
+    '0C:B2:B7:45:BB:B2': 'k1',
+    'FC:45:C3:A2:F8:6A': 'k2',
+    'FC:45:C3:91:24:02': 'k3',
+    'E0:E5:CF:38:7B:FB': 'k4',
+    '3C:A3:08:0D:16:06': 'k5',
+    '34:15:13:DF:BF:1F': 'k6',
+    '88:3F:4A:E9:20:7D': 'k7',
+  };
   constructor(private zone: NgZone) {}
 
   public scanDevices() {

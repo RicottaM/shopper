@@ -9,6 +9,7 @@
   <ng-template let-device="item">
     <StackLayout [ngClass]="{'closest-device': device.UUID === sortedDevices[0]?.UUID}">
       <Label text="Name: {{ device.name }}"></Label>
+      <Label text="Mapped Name: {{ macToNameMapping[device.UUID] }}"></Label>
       <Label text="MAC: {{ device.UUID }}"></Label>
       <Label text="RSSI: {{ device.RSSI }}"></Label>
     </StackLayout>
