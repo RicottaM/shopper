@@ -42,4 +42,8 @@ export class CategoriesComponent {
   goToProducts(categoryId: number): void {
     this.router.navigate(["/products", { id: categoryId }]);
   }
+
+  goToCart(): void {
+    this.router.navigate(["/cart"]);
+  }
 }

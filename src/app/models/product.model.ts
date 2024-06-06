@@ -1,4 +1,8 @@
 export interface Product {
-  id: number;
-  productName: string;
+  product_id: number;
+  name: string;
+  amount: number;
+  cart_id: number;
+  price: number;
+  unit_symbol: string;
 }

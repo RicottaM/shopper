@@ -1,16 +1,16 @@
 import { Injectable } from "@angular/core";
-import { Category } from "../models/category.model";
+import { Cart } from "../models/cart.model";
 
 @Injectable({
   providedIn: "root",
 })
-export class CategoryService {
-  private categoriesUrl: string = "http://localhost:3000/categories";
+export class CartService {
+  private cartsUrl: string = "http://localhost:3000/products";
 
   constructor() {}
 
-  async getCategories(): Promise<Category[]> {
-    return fetch(this.categoriesUrl)
+  async getCarts(): Promise<Cart[]> {
+    return fetch(this.cartsUrl)
       .then((response: Response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

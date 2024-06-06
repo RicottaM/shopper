@@ -1,0 +1,53 @@
+<GridLayout
+  columns="*, *"
+  rows="auto, auto"
+  backgroundColor="#A0CBB3"
+  flexDirection="column"
+>
+  <ScrollView
+    row="0"
+    colSpan="2"
+    height="680dp"
+    marginTop="35dp"
+    marginBottom="35dp"
+  >
+  </ScrollView>
+
+  <StackLayout
+    colSpan="2"
+    row="1"
+    orientation="horizontal"
+    horizontalAlignment="center"
+  >
+    <Button
+      text="Cart"
+      backgroundColor="#E8FEFD"
+      color="#013b3d"
+      fontSize="20dp"
+      padding="20dp"
+      width="100dp"
+      borderRadius="25dp"
+      margin="10dp"
+      (tap)="goToCart()"
+    ></Button>
+    <Button
+      text="Home"
+      backgroundColor="#E8FEFD"
+      color="#013b3d"
+      fontSize="20dp"
+      width="100dp"
+      margin="10dp"
+      borderRadius="25dp"
+      (tap)="goHome()"
+    ></Button>
+    <Button
+      text="Map"
+      backgroundColor="#E8FEFD"
+      color="#013b3d"
+      fontSize="20dp"
+      borderRadius="25dp"
+      width="100dp"
+      margin="10dp"
+    ></Button>
+  </StackLayout>
+</GridLayout>

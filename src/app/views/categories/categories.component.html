@@ -5,7 +5,7 @@
   flexDirection="column"
 >
   <TextField
-    hint="Search"
+    text="Search"
     colSpan="2"
     row="0"
     backgroundColor="#E8FEFD"
@@ -18,9 +18,16 @@
     textAlignment="center"
   ></TextField>
 
-  <ScrollView row="1" col="0" colSpan="2" height="675dp" marginTop="20dp">
+  <ScrollView
+    row="1"
+    col="0"
+    colSpan="2"
+    height="675dp"
+    marginTop="10dp"
+    marginBotton="10dp"
+  >
     <GridLayout columns="*, *">
-      <StackLayout col="0">
+      <StackLayout col="0" margin="10dp" padding="10dp">
         <ng-container
           *ngFor="
             let category of categories.slice(0, categories.length / 2);
@@ -30,15 +37,15 @@
           <TextView
             [text]="category.category_name"
             textAlignment="center"
-            marginTop="10dp"
             fontSize="20dp"
             editable="false"
+            fontWeight="bold"
             color="#013b3d"
             (tap)="goToProducts(category.category_id)"
           ></TextView>
         </ng-container>
       </StackLayout>
-      <StackLayout col="1">
+      <StackLayout col="1" margin="10dp" padding="10dp">
         <ng-container
           *ngFor="
             let category of categories.slice(categories.length / 2);
@@ -48,8 +55,8 @@
           <TextView
             [text]="category.category_name"
             textAlignment="center"
-            marginTop="10dp"
             fontSize="20dp"
+            fontWeight="bold"
             editable="false"
             color="#013b3d"
             (tap)="goToProducts(category.category_id)"
@@ -66,7 +73,7 @@
     horizontalAlignment="center"
   >
     <Button
-      text="Map"
+      text="Store"
       backgroundColor="#E8FEFD"
       color="#013b3d"
       fontSize="20dp"
@@ -93,6 +100,7 @@
       borderRadius="25dp"
       width="100dp"
       margin="10dp"
+      (tap)="goToCart()"
     ></Button>
   </StackLayout>
 </GridLayout>
