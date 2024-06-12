@@ -22,7 +22,7 @@ export const categoryService = {
     },
     create: async (newCategory) => {
         const category = await client.query(
-            `INSERT INTO categories (name) VALUES ('${newCategory.name}');`
+            `INSERT INTO categories (name) VALUES ('${newCategory.name}') returning *;`
         );
 
         if (!category.rows.length) {
@@ -52,7 +52,7 @@ export const categoryService = {
         };
     },
     delete: async (id) => {
-        const category = await client.query(`DELETE FROM categories WHERE category_id = ${id};`);
+        const category = await client.query(`DELETE FROM categories WHERE category_id = ${id} returning *;`);
 
         if (!category.rows.length) {
             throw new ErrorWithStatus(`Couldn't find category with given id: ${id}.`, 404);

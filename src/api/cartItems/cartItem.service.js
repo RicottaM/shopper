@@ -53,7 +53,7 @@ export const cartItemService = {
         };
     },
     delete: async (id) => {
-        const cartItem = await client.query(`DELETE FROM cart_items WHERE cart_item_id = ${id};`);
+        const cartItem = await client.query(`DELETE FROM cart_items WHERE cart_item_id = ${id} returning *;`);
 
         if (!cartItem.rows.length) {
             throw new ErrorWithStatus(`Couldn't find cart item with given id: ${id}.`, 404);

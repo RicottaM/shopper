@@ -22,7 +22,7 @@ export const userService = {
   },
   create: async (newUser) => {
     const user = await client.query(
-      `INSERT INTO users (email, password, first_name, last_name) VALUES ('${newUser.email}', '${newUser.password}', '${newUser.name}', '${newUser.last_name}');`
+      `INSERT INTO users (email, password, first_name, last_name) VALUES ('${newUser.email}', '${newUser.password}', '${newUser.name}', '${newUser.last_name}') returning *;`
     );
 
     if (!user.rows.length) {
@@ -55,7 +55,7 @@ export const userService = {
     };
   },
   delete: async (id) => {
-    const user = await client.query(`DELETE FROM users WHERE user_id = ${id};`);
+    const user = await client.query(`DELETE FROM users WHERE user_id = ${id} returning *;`);
 
     if (!user.rows.length) {
       throw new ErrorWithStatus(`Couldn't find user with given id: ${id}.`, 404);

@@ -22,7 +22,7 @@ export const productService = {
     },
     create: async (newProduct) => {
         const product = await client.query(
-            `INSERT INTO products (name, price, description, category_id, availability, unit_id) VALUES ('${newProduct.name}', ${newProduct.price}, '${newProduct.description}', ${newProduct.category_id}, ${newProduct.availability}, ${newProduct.cart_id});`
+            `INSERT INTO products (name, price, description, category_id, availability, unit_id) VALUES ('${newProduct.name}', ${newProduct.price}, '${newProduct.description}', ${newProduct.category_id}, ${newProduct.availability}, ${newProduct.cart_id}) returning *;`
         );
 
         if (!product.rows.length) {
@@ -57,7 +57,7 @@ export const productService = {
         };
     },
     delete: async (id) => {
-        const product = await client.query(`DELETE FROM products WHERE product_id = ${id};`);
+        const product = await client.query(`DELETE FROM products WHERE product_id = ${id} returning *;`);
 
         if (!product.rows.length) {
             throw new ErrorWithStatus(`Couldn't find product with given id: ${id}.`, 404);

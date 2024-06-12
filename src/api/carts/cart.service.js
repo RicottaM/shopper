@@ -22,7 +22,7 @@ export const cartService = {
   },
   create: async (newCart) => {
     const cart = await client.query(
-      `INSERT INTO carts (user_id, creation_date) VALUES (${newCart.user_id}, CURRENT_TIMESTAMP);`
+      `INSERT INTO carts (user_id, creation_date) VALUES (${newCart.user_id}, CURRENT_TIMESTAMP) returning *;`
     );
 
     if (!cart.rows.length) {
@@ -53,7 +53,7 @@ export const cartService = {
     };
   },
   delete: async (id) => {
-    const cart = await client.query(`DELETE FROM carts WHERE cart_id = ${id};`);
+    const cart = await client.query(`DELETE FROM carts WHERE cart_id = ${id} returning *;`);
 
     if (!cart.rows.length) {
       throw new ErrorWithStatus(`Couldn't find cart with given id: ${id}.`, 404);
