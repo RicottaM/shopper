@@ -25,6 +25,7 @@ export class CartItemsService {
   }
 
   async addCartItem(cartItem: CartItem): Promise<CartItem> {
+    alert(`${cartItem.cart_id}/${cartItem.product_id}/${cartItem.quantity}`);
     return fetch(this.cartItemsUrl, {
       method: "POST",
       headers: {

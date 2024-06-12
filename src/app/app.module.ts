@@ -8,6 +8,7 @@ import { CategoriesComponent } from "./views/categories/categories.component";
 import { ProductsComponent } from "./views/products/products.component";
 import { CartComponent } from "./views/cart/cart.component";
 import { MapComponent } from "./views/map/map.component";
+import { StoreGridComponent } from "./components/store-grid/store-grid.component";
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -20,6 +21,7 @@ import { MapComponent } from "./views/map/map.component";
     ProductsComponent,
     CartComponent,
     MapComponent,
+    StoreGridComponent,
   ],
   schemas: [NO_ERRORS_SCHEMA],
 })

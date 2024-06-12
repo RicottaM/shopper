@@ -42,8 +42,8 @@ export class ProductsComponent {
         this.products.forEach((product: Product) => {
           this.productService
             .getProductUnit(product.product_id)
-            .then((unitSymbol: string) => {
-              product.unit_symbol = unitSymbol;
+            .then((unit_symbol: string) => {
+              product.unit_symbol = unit_symbol;
             })
             .catch((error: Error) => {
               console.error("Error when assigning units to products: ", error);
