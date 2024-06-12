@@ -10,7 +10,7 @@ export class BluetoothComponent {
   private bluetooth = new Bluetooth();
   public devices: Array<Peripheral> = [];
   private deviceSet = new Set<string>();
-  public isScanning = false;
+  public isScanning: boolean = false;
   private scanInterval: any;
   public sortedDevices: Array<Peripheral> = [];
   private macToNameMapping = {

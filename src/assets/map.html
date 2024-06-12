@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grid 7x13</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+      }
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(7, 50px);
+        grid-template-rows: repeat(13, 50px);
+        gap: 5px;
+      }
+      .grid-item {
+        width: 50px;
+        height: 50px;
+        background-color: #a0cbb3;
+        border: 1px solid #013b3d;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        color: #013b3d;
+      }
+      .room {
+        background-color: #2e8913; /* Different background color for rooms */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid-container">
+      <!-- Generate grid items -->
+      <script>
+        const roomNumbers = [];
+        const roomPositions = [
+          [2, 2],
+          [5, 2],
+          [2, 5],
+          [5, 5],
+          [2, 8],
+          [5, 8],
+          [2, 11],
+          [5, 11],
+        ];
+
+        roomPositions.forEach(([col, row]) => {
+          roomNumbers.push((row - 1) * 7 + col, (row - 1) * 7 + col + 1);
+          roomNumbers.push(row * 7 + col, row * 7 + col + 1);
+        });
+
+        for (let i = 1; i <= 91; i++) {
+          // 7 * 13 = 91
+          const isRoom = roomNumbers.includes(i);
+          document.write(
+            `<div class="grid-item ${isRoom ? "room" : ""}">${i}</div>`
+          );
+        }
+      </script>
+    </div>
+  </body>
+</html>

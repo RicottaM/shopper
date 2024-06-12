@@ -20,63 +20,40 @@
 
   <ScrollView
     row="1"
-    col="0"
     colSpan="2"
     height="675dp"
-    marginTop="10dp"
-    marginBotton="10dp"
+    marginTop="5dp"
+    marginBottom="5dp"
   >
     <StackLayout>
-      <ng-container *ngFor="let product of products; let i = index">
+      <ng-container *ngFor="let product of cartProducts">
         <GridLayout
-          rows="auto, auto"
-          columns="*"
+          rows="auto"
+          columns="250dp, 120dp"
           margin="10dp"
           padding="10dp"
-          borderRadius="10dp"
-          horizontalAlignment="center"
         >
-          <!-- Pierwszy wiersz: Nazwa produktu -->
           <Label
+            marginLeft="50dp"
             text="{{ product.name }}"
             fontSize="20dp"
             fontWeight="bold"
             editable="false"
             color="#013b3d"
+            textWrap="true"
             row="0"
             col="0"
-            marginBottom="20dp"
           ></Label>
-
-          <!-- Drugi wiersz: Cena za jednostkę i guzik "Add" -->
-          <GridLayout
-            rows="auto"
-            columns="200dp, 100dp"
-            row="1"
-            col="0"
-            colSpan="1"
-          >
-            <Label
-              text="{{ product.price + '$ / ' + product.unit_symbol }}"
-              fontSize="20dp"
-              editable="false"
-              color="#013b3d"
-              col="0"
-              textAlignment="center"
-            ></Label>
-
-            <Button
-              text="Add"
-              fontSize="20dp"
-              marginTop="20dp"
-              backgroundColor="#E8FEFD"
-              borderRadius="20dp"
-              color="#013b3d"
-              (tap)="addToCart(product, i)"
-              col="1"
-              verticalAlignment="center"
-            ></Button>
-          </GridLayout>
+          <Button
+            row="0"
+            col="1"
+            text="Delete"
+            backgroundColor="#E8FEFD"
+            color="#013b3d"
+            fontSize="20dp"
+            borderRadius="25dp"
+            (tap)="deleteFromCart(product.product_id)"
+          ></Button>
         </GridLayout>
       </ng-container>
     </StackLayout>
@@ -93,7 +70,6 @@
       backgroundColor="#E8FEFD"
       color="#013b3d"
       fontSize="20dp"
-      padding="20dp"
       width="140dp"
       borderRadius="25dp"
       margin="10dp"
@@ -110,14 +86,14 @@
       (tap)="goHome()"
     ></Button>
     <Button
-      text="Cart"
+      text="Map"
       backgroundColor="#E8FEFD"
       color="#013b3d"
       fontSize="20dp"
       borderRadius="25dp"
       width="80dp"
       margin="10dp"
-      (tap)="goToCart()"
+      (tap)="goToMap()"
     ></Button>
   </StackLayout>
 </GridLayout>
