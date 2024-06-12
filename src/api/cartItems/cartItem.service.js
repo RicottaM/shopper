@@ -22,7 +22,7 @@ export const cartItemService = {
     },
     create: async (newCartItem) => {
         const cartItem = await client.query(
-            `INSERT INTO cart_items (cart_id, product_id, quantity) VALUES ('${newCartItem.name}', ${newCartItem.price}, '${newCartItem.description}', ${newCartItem.category_id}, ${newCartItem.availability}, ${newCartItem.cart_id});`
+            `INSERT INTO cart_items (cart_id, product_id, quantity) VALUES ('${newCartItem.cart_id}', ${newCartItem.product_id}, '${newCartItem.quantity}') returning *;`
         );
 
         if (!cartItem.rows.length) {
