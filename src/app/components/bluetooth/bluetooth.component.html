@@ -7,8 +7,13 @@
 </ActionBar>
 <ListView [items]="devices">
   <ng-template let-device="item">
-    <StackLayout [ngClass]="{'closest-device': device.UUID === sortedDevices[0]?.UUID}">
-      <Label text="Name: {{ device.name }}"></Label>
+    <StackLayout
+      [ngClass]="{
+        'closest-device': sortedDevices.length > 0 && (device.UUID === sortedDevices[0]?.UUID || device.UUID === sortedDevices[1]?.UUID),
+        'device': true
+      }"
+    >
+      <Label text="Name: {{ device.localName }}"></Label>
       <Label text="Mapped Name: {{ macToNameMapping[device.UUID] }}"></Label>
       <Label text="MAC: {{ device.UUID }}"></Label>
       <Label text="RSSI: {{ device.RSSI }}"></Label>
