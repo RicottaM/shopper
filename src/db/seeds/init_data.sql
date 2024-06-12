@@ -1,3 +1,11 @@
+DELETE FROM cart_items;
+DELETE FROM carts;
+DELETE FROM users;
+DELETE FROM products;
+DELETE FROM units;
+DELETE FROM categories;
+DELETE FROM sections;
+
 -- Sections (20 examples)
 INSERT INTO sections (section_name) VALUES
 ('Produce'), ('Dairy'), ('Bakery'), ('Meat & Seafood'), ('Frozen Foods'),
