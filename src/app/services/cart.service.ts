@@ -5,7 +5,7 @@ import { Cart } from "../models/cart.model";
   providedIn: "root",
 })
 export class CartService {
-  private cartsUrl: string = "http://localhost:3000/products";
+  private cartsUrl: string = "http://52.71.93.62/carts";
 
   constructor() {}
 
@@ -15,7 +15,6 @@ export class CartService {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-
         return response.json();
       })
       .catch((error: Error) => {

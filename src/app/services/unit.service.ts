@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
-import { Unit } from "../models/unit.mode";
+import { Unit } from "../models/unit.model";
 
 @Injectable({
   providedIn: "root",
 })
 export class UnitService {
-  private unitsUrl: string = "http://localhost:3000/units";
+  private unitsUrl: string = "http://52.71.93.62/units";
 
   constructor() {}
 

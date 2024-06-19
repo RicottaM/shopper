@@ -5,7 +5,7 @@ import { Category } from "../models/category.model";
   providedIn: "root",
 })
 export class CategoryService {
-  private categoriesUrl: string = "http://localhost:3000/categories";
+  private categoriesUrl: string = "http://52.71.93.62/categories";
 
   constructor() {}
 
@@ -13,7 +13,7 @@ export class CategoryService {
     return fetch(this.categoriesUrl)
       .then((response: Response) => {
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error(`Network response was not ok: ${response}`);
         }
 
         return response.json();

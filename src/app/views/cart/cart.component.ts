@@ -1,8 +1,8 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { Page } from "@nativescript/core";
-import { CartItem } from "~/app/models/cart-item";
-import { Product } from "~/app/models/product.model";
+import { CartItem } from "../../models/cart-item.model";
+import { Product } from "../../models/product.model";
 import { CartItemsService } from "~/app/services/cart-items.service";
 import { ProductService } from "~/app/services/product.service";
 

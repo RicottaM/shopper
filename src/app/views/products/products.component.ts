@@ -4,7 +4,7 @@ import { Product } from "../../models/product.model";
 import { ProductService } from "../../services/product.service";
 import { CartItemsService } from "../../services/cart-items.service";
 import { Page, TextField } from "@nativescript/core";
-import { CartItem } from "~/app/models/cart-item";
+import { CartItem } from "../../models/cart-item.model";
 
 @Component({
   selector: "Products",

@@ -2,13 +2,14 @@
   rows="50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50"
   columns="50, 50, 50, 50, 50, 50, 50"
   marginTop="20dp"
+  borderRadius="25dp"
+  borderColor="#013b3d"
 >
   <ng-container *ngFor="let row of rows; let i = index">
     <ng-container *ngFor="let col of columns; let j = index">
       <Label
         [row]="row"
         [col]="col"
-        borderColor="#013b3d"
         backgroundColor="{{ isRoom(i, j) ? '#013b3d' : '#E8FEFD' }}"
       ></Label>
     </ng-container>

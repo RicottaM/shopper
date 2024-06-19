@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
-import { CartItem } from "../models/cart-item";
+import { CartItem } from "../models/cart-item.model";
 import { Cart } from "../models/cart.model";
 
 @Injectable({
   providedIn: "root",
 })
 export class CartItemsService {
-  private cartItemsUrl: string = "http://localhost:3000/cart-items";
+  private cartItemsUrl: string = "http://52.71.93.62/cart-items";
 
   constructor() {}
 
@@ -25,7 +25,6 @@ export class CartItemsService {
   }
 
   async addCartItem(cartItem: CartItem): Promise<CartItem> {
-    alert(`${cartItem.cart_id}/${cartItem.product_id}/${cartItem.quantity}`);
     return fetch(this.cartItemsUrl, {
       method: "POST",
       headers: {

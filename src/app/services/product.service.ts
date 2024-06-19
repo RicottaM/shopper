@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Product } from "../models/product.model";
-import { Unit } from "../models/unit.mode";
+import { Unit } from "../models/unit.model";
 
 @Injectable({
   providedIn: "root",
 })
 export class ProductService {
-  private productsUrl: string = "http://localhost:3000/products";
+  private productsUrl: string = "http://52.71.93.62/products";
 
   constructor() {}
 
