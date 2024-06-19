@@ -1,5 +1,6 @@
 import { Component, NgZone } from "@angular/core";
 import { Bluetooth, Peripheral } from "@nativescript-community/ble";
+import { PositionService } from "../../services/position.service";
 
 @Component({
   selector: "Bluetooth",
@@ -23,7 +24,7 @@ export class BluetoothComponent {
     "88:3F:4A:E9:20:7D": "k7",
   };
 
-  constructor(private zone: NgZone) {}
+  constructor(private zone: NgZone, private positionService: PositionService) {}
 
   // Kalman filter variables
   private rssiMeasurements: { [key: string]: number[] } = {};
@@ -66,6 +67,9 @@ export class BluetoothComponent {
 
           if (this.devices.length >= 1) {
             this.sortedDevices = [this.devices[0]]; // Take the first device only
+            this.positionService.updateLocation(
+              this.macToNameMapping[this.devices[0].UUID]
+            );
           }
         });
       }, 500);

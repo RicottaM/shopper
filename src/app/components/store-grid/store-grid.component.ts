@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { PositionService } from "../../services/position.service";
 
 @Component({
   selector: "app-store-grid",
@@ -43,7 +44,15 @@ export class StoreGridComponent {
     [11, 5], // room 8
   ];
 
-  constructor() {}
+  currentLocation: number | null = null;
+
+  constructor(private positionService: PositionService) {}
+
+  ngOnInit() {
+    this.positionService.currentLocation$.subscribe((location) => {
+      this.currentLocation = location;
+    });
+  }
 
   isRoom(row: number, col: number): boolean {
     for (const room of this.roomPositions) {
