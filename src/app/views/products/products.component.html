@@ -26,7 +26,7 @@
     marginTop="10dp"
     marginBotton="10dp"
   >
-    <StackLayout>
+    <StackLayout *ngIf="products">
       <ng-container *ngFor="let product of products; let i = index">
         <GridLayout
           rows="auto, auto"

@@ -9,7 +9,6 @@ import { ProductsComponent } from "./views/products/products.component";
 import { CartComponent } from "./views/cart/cart.component";
 import { MapComponent } from "./views/map/map.component";
 import { StoreGridComponent } from "./components/store-grid/store-grid.component";
-import { PathFindingComponent } from "./components/path-finding/path-finding.component";
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -23,7 +22,6 @@ import { PathFindingComponent } from "./components/path-finding/path-finding.com
     CartComponent,
     MapComponent,
     StoreGridComponent,
-    PathFindingComponent,
   ],
   schemas: [NO_ERRORS_SCHEMA],
 })

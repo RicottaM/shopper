@@ -6,12 +6,12 @@ import { Section } from "../models/section.model";
   providedIn: "root",
 })
 export class SectionsService {
-  private cartsUrl: string = "http://192.168.1.14:3000/carts";
+  private cartsUrl: string = "http://52.71.93.62/carts";
 
   constructor() {}
 
   async getSectionsByCart(cartId: number): Promise<Section[]> {
-    return fetch(`${this.cartsUrl}/${cartId}/sections}`)
+    return fetch(`${this.cartsUrl}/${cartId}/sections`)
       .then((response: Response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

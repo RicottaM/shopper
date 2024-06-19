@@ -1,5 +1,10 @@
 import { Component } from "@angular/core";
 import { PositionService } from "../../services/position.service";
+import { SectionsService } from "~/app/services/sections.service";
+import { PathFindingService } from "~/app/services/path-finding.service";
+import { BluetoothService } from "~/app/services/bluetooth.service";
+import { Section } from "~/app/models/section.model";
+import { roomPositions, sectorMap } from "../../utils/constants";
 
 @Component({
   selector: "app-store-grid",
@@ -9,58 +14,93 @@ import { PositionService } from "../../services/position.service";
 export class StoreGridComponent {
   rows: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   columns: number[] = [0, 1, 2, 3, 4, 5, 6];
-  roomPositions: Array<Array<number>> = [
-    [1, 1],
-    [1, 2],
-    [1, 4],
-    [1, 5], // room 1
-    [2, 1],
-    [2, 2],
-    [2, 4],
-    [2, 5], // room 2
-    [4, 1],
-    [4, 2],
-    [4, 4],
-    [4, 5], // room 3
-    [5, 1],
-    [5, 2],
-    [5, 4],
-    [5, 5], // room 4
-    [7, 1],
-    [7, 2],
-    [7, 4],
-    [7, 5], // room 5
-    [8, 1],
-    [8, 2],
-    [8, 4],
-    [8, 5], // room 6
-    [10, 1],
-    [10, 2],
-    [10, 4],
-    [10, 5], // room 7
-    [11, 1],
-    [11, 2],
-    [11, 4],
-    [11, 5], // room 8
-  ];
-
+  sections: Section[] = [];
   currentLocation: number | null = null;
+  shortestPath: number[] = [];
+  pathSectors: Array<number[]> = [];
 
-  constructor(private positionService: PositionService) {}
+  constructor(
+    private sectionsService: SectionsService,
+    private positionService: PositionService,
+    private pathFindingService: PathFindingService,
+    private bluetoothService: BluetoothService
+  ) {
+    sectionsService
+      .getSectionsByCart(1)
+      .then((sections: Section[]) => {
+        //this.bluetoothService.scanDevices();
+        this.sections = sections;
+        this.currentLocation = 1; // temporary
 
-  ngOnInit() {
-    this.positionService.currentLocation$.subscribe((location) => {
-      this.currentLocation = location;
+        // this.positionService.currentLocation$.subscribe((location) => {
+        //   this.currentLocation = location;
+        // });
+      })
+      .then(() => {
+        this.shortestPath = this.pathFindingService.getPath(
+          this.sections,
+          this.currentLocation
+        );
+      })
+      .then(() => {
+        this.setShortestPathSectors();
+      });
+  }
+
+  ngOnInit() {}
+
+  setShortestPathSectors(): void {
+    this.shortestPath.forEach((sector: number) => {
+      sectorMap[sector].forEach((sectorElement) => {
+        this.pathSectors.push(sectorElement);
+      });
     });
   }
 
   isRoom(row: number, col: number): boolean {
-    for (const room of this.roomPositions) {
+    for (const room of roomPositions) {
       if (room[0] === row && room[1] === col) {
         return true;
       }
     }
 
     return false;
+  }
+
+  isPathSector(row: number, col: number): boolean {
+    for (const sector of this.pathSectors) {
+      if (sector[0] === row && sector[1] === col) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  isUser(row: number, col: number): boolean {
+    const userSector = sectorMap[this.currentLocation];
+
+    if (userSector) {
+      for (const sector of userSector) {
+        if (sector[0] === row && sector[1] === col) {
+          console.log("yes");
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  setColor(row: number, col: number): string {
+    if (this.isUser(row, col)) {
+      return "blue";
+    } else if (this.isPathSector(row, col)) {
+      return "red";
+    } else if (this.isRoom(row, col)) {
+      return "#013b3d";
+    } else {
+      return "#E8FEFD";
+    }
   }
 }

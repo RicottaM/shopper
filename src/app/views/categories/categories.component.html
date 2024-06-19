@@ -27,7 +27,7 @@
     marginBotton="10dp"
   >
     <GridLayout columns="*, *">
-      <StackLayout col="0" margin="10dp" padding="10dp">
+      <StackLayout col="0" margin="10dp" padding="10dp" *ngIf="categories">
         <ng-container
           *ngFor="
             let category of categories.slice(0, categories.length / 2);
