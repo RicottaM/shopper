@@ -25,7 +25,7 @@ export class StoreGridComponent {
     private pathFindingService: PathFindingService,
     private bluetoothService: BluetoothService
   ) {
-    sectionsService
+    this.sectionsService
       .getSectionsByCart(1)
       .then((sections: Section[]) => {
         this.bluetoothService.scanDevices();
