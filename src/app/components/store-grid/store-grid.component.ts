@@ -28,13 +28,13 @@ export class StoreGridComponent {
     sectionsService
       .getSectionsByCart(1)
       .then((sections: Section[]) => {
-        //this.bluetoothService.scanDevices();
+        this.bluetoothService.scanDevices();
         this.sections = sections;
-        this.currentLocation = 1; // temporary
+        //this.currentLocation = 1; // temporary
 
-        // this.positionService.currentLocation$.subscribe((location) => {
-        //   this.currentLocation = location;
-        // });
+        this.positionService.currentLocation$.subscribe((location) => {
+          this.currentLocation = location;
+        });
       })
       .then(() => {
         this.shortestPath = this.pathFindingService.getPath(
@@ -83,7 +83,6 @@ export class StoreGridComponent {
     if (userSector) {
       for (const sector of userSector) {
         if (sector[0] === row && sector[1] === col) {
-          console.log("yes");
           return true;
         }
       }
@@ -94,9 +93,9 @@ export class StoreGridComponent {
 
   setColor(row: number, col: number): string {
     if (this.isUser(row, col)) {
-      return "blue";
+      return "#2e8913";
     } else if (this.isPathSector(row, col)) {
-      return "red";
+      return "#a0cbb3";
     } else if (this.isRoom(row, col)) {
       return "#013b3d";
     } else {
