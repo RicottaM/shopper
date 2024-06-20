@@ -10,7 +10,7 @@ import { cartRouter } from './api/carts/cart.router.js';
 import { errorHandler } from './error/error-handler.js';
 
 const app = express();
-const port = process.env.SERVER_PORT;
+const port = process.env.SERVER_PORT || 3003;
 
 await DatabaseConnector.connect();
 
@@ -32,4 +32,8 @@ app.listen(port, () => {
 
 app.get('*', (req, res) => {
   res.sendStatus(404);
+});
+
+app.get('/', (req, res) => {
+  res.send('Hello World!');
 });

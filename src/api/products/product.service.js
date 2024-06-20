@@ -68,7 +68,7 @@ export const productService = {
         };
     },
     getBySectionId: async (sectionId) => {
-        const products = await client.query(`SELECT * FROM products WHERE section_id = ${sectionId};`);
+        const products = await client.query(`SELECT * FROM products WHERE category_id IN (SELECT category_id FROM categories WHERE section_id = ${sectionId});`);
 
         if (!products.rows.length) {
             throw new ErrorWithStatus(`Couldn't find any product with given section id: ${sectionId}.`, 404);
