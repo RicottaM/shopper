@@ -18,8 +18,47 @@
     textAlignment="center"
   ></TextField>
 
-  <ScrollView
+  <StackLayout
+    colSpan="2"
     row="1"
+    orientation="horizontal"
+    horizontalAlignment="center"
+  >
+    <Button
+      text="Categories"
+      backgroundColor="#E8FEFD"
+      color="#013b3d"
+      fontSize="20dp"
+      padding="20dp"
+      width="140dp"
+      borderRadius="25dp"
+      margin="10dp"
+      (tap)="goToCategories()"
+    ></Button>
+    <Button
+      text="Home"
+      backgroundColor="#E8FEFD"
+      color="#013b3d"
+      fontSize="20dp"
+      width="80dp"
+      borderRadius="25dp"
+      margin="10dp"
+      (tap)="goHome()"
+    ></Button>
+    <Button
+      text="Cart"
+      backgroundColor="#E8FEFD"
+      color="#013b3d"
+      fontSize="20dp"
+      borderRadius="25dp"
+      width="80dp"
+      margin="10dp"
+      (tap)="goToCart()"
+    ></Button>
+  </StackLayout>
+
+  <ScrollView
+    row="2"
     col="0"
     colSpan="2"
     height="675dp"
@@ -81,43 +120,4 @@
       </ng-container>
     </StackLayout>
   </ScrollView>
-
-  <StackLayout
-    colSpan="2"
-    row="2"
-    orientation="horizontal"
-    horizontalAlignment="center"
-  >
-    <Button
-      text="Categories"
-      backgroundColor="#E8FEFD"
-      color="#013b3d"
-      fontSize="20dp"
-      padding="20dp"
-      width="140dp"
-      borderRadius="25dp"
-      margin="10dp"
-      (tap)="goToCategories()"
-    ></Button>
-    <Button
-      text="Home"
-      backgroundColor="#E8FEFD"
-      color="#013b3d"
-      fontSize="20dp"
-      width="80dp"
-      borderRadius="25dp"
-      margin="10dp"
-      (tap)="goHome()"
-    ></Button>
-    <Button
-      text="Cart"
-      backgroundColor="#E8FEFD"
-      color="#013b3d"
-      fontSize="20dp"
-      borderRadius="25dp"
-      width="80dp"
-      margin="10dp"
-      (tap)="goToCart()"
-    ></Button>
-  </StackLayout>
 </GridLayout>

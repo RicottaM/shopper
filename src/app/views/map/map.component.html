@@ -5,18 +5,8 @@
   flexDirection="column"
 >
   <StackLayout
+    colSpan="2"
     row="0"
-    colSpan="2"
-    marginTop="35dp"
-    marginBottom="35dp"
-    horizontalAlignment="center"
-  >
-    <app-store-grid></app-store-grid>
-  </StackLayout>
-
-  <StackLayout
-    colSpan="2"
-    row="1"
     orientation="horizontal"
     horizontalAlignment="center"
   >
@@ -50,5 +40,14 @@
       width="100dp"
       margin="10dp"
     ></Button>
+  </StackLayout>
+  <StackLayout
+    row="1"
+    colSpan="2"
+    marginTop="35dp"
+    marginBottom="35dp"
+    horizontalAlignment="center"
+  >
+    <app-store-grid></app-store-grid>
   </StackLayout>
 </GridLayout>
