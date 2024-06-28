@@ -1,39 +1,17 @@
 {
+  "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "module": "esnext",
-    "target": "es2020",
-    "moduleResolution": "node",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "noEmitHelpers": true,
-    "noEmitOnError": true,
-    "skipLibCheck": true,
-    "lib": [
-      "ESNext",
-      "dom"
-    ],
-    "baseUrl": ".",
+    "strict": true,
     "paths": {
-      "~/*": [
-        "src/*"
-      ],
       "@/*": [
-        "src/*"
+        "./*"
       ]
-    },
-    "removeComments": false
+    }
   },
   "include": [
-    "./src/**/*.ios.ts",
-    "./src/**/*.android.ts"
-  ],
-  "files": [
-    "./src/main.ts",
-    "./references.d.ts",
-    "./src/polyfills.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "platforms"
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
   ]
 }
