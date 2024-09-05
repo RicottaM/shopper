@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
 
-export default function HomePage() {
+export default function Home() {
   const router = useRouter();
 
   return (
@@ -21,7 +21,7 @@ export default function HomePage() {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => router.push("/nextPage")}
+        onPress={() => router.push("/Categories")}
       >
         <Text style={styles.buttonText}>Get Started</Text>
         <Text style={styles.icon}>
