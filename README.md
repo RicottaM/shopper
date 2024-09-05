@@ -29,25 +29,10 @@
 
 ### Running in The Development Environment
 
-To run the application in your development environment, follow the instructions below based on your target platform:
-
-#### Android
-
-To run the application on an Android emulator or device, execute the following command:
+To run the application in your development environment, follow the comand below regardless of your target platform:
 
 ```bash
-ns run android
+npx expo start
 ```
 
-#### iOS
-
-To run the application on an iOS emulator or device, execute the following command:
-
-```bash
-ns run ios
-```
-
-## Additional Notes
-
-Make sure your development environment meets the requirements specified in the NativeScript documentation.
 Happy coding! 🚀
