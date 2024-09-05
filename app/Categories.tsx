@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import {
   View,
   Text,
@@ -9,36 +9,30 @@ import {
 } from "react-native";
 import { useNavigation, useRouter } from "expo-router";
 import { FontAwesome5 } from "@expo/vector-icons";
-
-const categories = [
-  { id: 1, name: "Garden" },
-  { id: 2, name: "Kitchen" },
-  { id: 3, name: "Furniture" },
-  { id: 4, name: "Lightning" },
-  { id: 5, name: "AGD" },
-  { id: 6, name: "Bathroom" },
-  { id: 7, name: "Electronics" },
-  { id: 8, name: "Toys" },
-  { id: 9, name: "Clothing" },
-  { id: 10, name: "Books" },
-  { id: 11, name: "Electricity" },
-  { id: 12, name: "Sports" },
-  { id: 13, name: "Women" },
-  { id: 14, name: "Art" },
-  { id: 15, name: "Heating" },
-  { id: 16, name: "Beer" },
-  { id: 17, name: "Alcohol" },
-  { id: 18, name: "Bedroom" },
-  { id: 19, name: "Programming" },
-  { id: 20, name: "Men" },
-];
+import { Category } from "./models/category.model";
 
 export default function Categories() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredCategories, setFilteredCategories] = useState(categories);
+  const [filteredCategories, setFilteredCategories] = useState([]);
+  const [categories, setCategories] = useState([]);
   const router = useRouter();
   const navIconSize = 32;
   const navigation = useNavigation();
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/categories");
+        const data = await response.json();
+        setCategories(data);
+        setFilteredCategories(data);
+      } catch (error) {
+        console.error("Błąd podczas pobierania kategorii:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -49,8 +43,8 @@ export default function Categories() {
   const handleSearch = (text: string) => {
     setSearchQuery(text);
 
-    const filteredData = categories.filter((category) =>
-      category.name.toLowerCase().includes(text.toLowerCase())
+    const filteredData = categories.filter((category: Category) =>
+      category.category_name.toLowerCase().includes(text.toLowerCase())
     );
 
     setFilteredCategories(filteredData);
@@ -74,9 +68,9 @@ export default function Categories() {
       </View>
 
       <ScrollView contentContainerStyle={styles.gridContainer}>
-        {filteredCategories.map((category) => (
+        {filteredCategories.map((category: Category) => (
           <View key={category.id} style={styles.gridItem}>
-            <Text style={styles.categoryText}>{category.name}</Text>
+            <Text style={styles.categoryText}>{category.category_name}</Text>
           </View>
         ))}
       </ScrollView>
@@ -123,7 +117,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#e8fefd",
-    borderRadius: 25,
+    borderRadius: 15,
     paddingHorizontal: 15,
     paddingVertical: 12,
     marginBottom: 15,
@@ -136,6 +130,8 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: "#013b3d",
     backgroundColor: "#e8fefd",
+    borderWidth: 1,
+    borderColor: "#e8fefd",
   },
   searchIcon: {
     marginLeft: 10,
@@ -158,6 +154,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#013b3d",
     fontWeight: "600",
+    padding: 10,
   },
   navbar: {
     flexDirection: "row",
