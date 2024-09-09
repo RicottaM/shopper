@@ -6,33 +6,22 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Alert,
 } from "react-native";
-import { useNavigation, useRouter } from "expo-router";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { Category } from "./models/category.model";
+import { useNavigation, useRouter, useLocalSearchParams } from "expo-router";
+import { Entypo, Feather, FontAwesome5 } from "@expo/vector-icons";
+import { Product } from "../models/Product";
+import { Unit } from "../models/Unit";
 
-export default function Categories() {
+export default function Products() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredCategories, setFilteredCategories] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [units, setUnits] = useState<Unit[]>([]);
+  const { categoryId } = useLocalSearchParams();
   const router = useRouter();
-  const navIconSize = 32;
   const navigation = useNavigation();
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/categories");
-        const data = await response.json();
-        setCategories(data);
-        setFilteredCategories(data);
-      } catch (error) {
-        console.error("Błąd podczas pobierania kategorii:", error);
-      }
-    };
-
-    fetchCategories();
-  }, []);
+  const navIconSize = 32;
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -40,24 +29,65 @@ export default function Categories() {
     });
   }, [navigation]);
 
+  useEffect(() => {
+    const fetchProductsByCategory = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/products/category/${categoryId}`
+        );
+        const data = await response.json();
+
+        setProducts(data);
+        setFilteredProducts(data);
+      } catch (error) {
+        console.error("Błąd podczas pobierania kategorii:", error);
+      }
+    };
+
+    const fetchUnits = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/units`);
+        const data = await response.json();
+
+        setUnits(data);
+      } catch (error) {
+        console.error("Błąd podczas pobierania kategorii:", error);
+      }
+    };
+
+    fetchUnits();
+    fetchProductsByCategory();
+  }, []);
+
   const handleSearch = (text: string) => {
     setSearchQuery(text);
 
-    const filteredData = categories.filter((category: Category) =>
-      category.category_name.toLowerCase().includes(text.toLowerCase())
+    const filteredData = products.filter((product: Product) =>
+      product.name.toLowerCase().includes(text.toLowerCase())
     );
 
-    setFilteredCategories(filteredData);
+    setFilteredProducts(filteredData);
   };
+
+  const getUnitSymbol = (unitId: number): string => {
+    const productUnit = units.find((unit: Unit) => unit.unit_id === unitId);
+
+    return productUnit ? productUnit.unit_symbol : "-";
+  };
+
+  function addToCart(product: Product) {
+    Alert.alert(`"${product.name}" has been added to your cart.`);
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.searchInput}
-          placeholder="Search categories"
+          placeholder="Search products"
           value={searchQuery}
           onChangeText={handleSearch}
+          selectionColor="#013b3d"
         />
         <FontAwesome5
           name="search"
@@ -68,9 +98,20 @@ export default function Categories() {
       </View>
 
       <ScrollView contentContainerStyle={styles.gridContainer}>
-        {filteredCategories.map((category: Category) => (
-          <View key={category.id} style={styles.gridItem}>
-            <Text style={styles.categoryText}>{category.category_name}</Text>
+        {filteredProducts.map((product: Product, index) => (
+          <View key={index} style={styles.gridItem}>
+            <Text style={styles.productText}>{product.name}</Text>
+            <Text style={styles.productText}>
+              {product.price + " $ / " + getUnitSymbol(product.unit_id)}
+            </Text>
+            <Text style={styles.productText} onPress={() => addToCart(product)}>
+              <Entypo
+                name="squared-plus"
+                size={26}
+                color="#013b3d"
+                style={styles.searchIcon}
+              />
+            </Text>
           </View>
         ))}
       </ScrollView>
@@ -78,13 +119,9 @@ export default function Categories() {
       <View style={styles.navbar}>
         <TouchableOpacity
           style={styles.navButton}
-          onPress={() => console.log("Pressed Cart")}
+          onPress={() => router.push("/screens/categories")}
         >
-          <FontAwesome5
-            name="map-marked-alt"
-            size={navIconSize}
-            color="#013b3d"
-          />
+          <FontAwesome5 name="th-list" size={navIconSize} color="#013b3d" />
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.navButton}
@@ -94,7 +131,7 @@ export default function Categories() {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.navButton}
-          onPress={() => console.log("Pressed Basket")}
+          onPress={() => router.push("/screens/cart")}
         >
           <FontAwesome5
             name="shopping-basket"
@@ -117,12 +154,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#e8fefd",
+    width: 330,
     borderRadius: 15,
     paddingHorizontal: 15,
     paddingVertical: 12,
     marginBottom: 15,
     marginTop: 80,
-    marginHorizontal: 30,
+    marginHorizontal: 50,
   },
   searchInput: {
     flex: 1,
@@ -150,11 +188,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 15,
   },
-  categoryText: {
+  productText: {
     fontSize: 18,
     color: "#013b3d",
     fontWeight: "600",
-    padding: 10,
+    padding: 5,
+    paddingHorizontal: 10,
   },
   navbar: {
     flexDirection: "row",

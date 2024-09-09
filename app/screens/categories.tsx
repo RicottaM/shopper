@@ -1,0 +1,173 @@
+import React, { useEffect, useState, useLayoutEffect } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Category } from "../models/Category";
+import { Link, useNavigation, useRouter } from "expo-router";
+
+export default function Categories() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredCategories, setFilteredCategories] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const router = useRouter();
+  const navigation = useNavigation();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+    });
+  }, [navigation]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/categories");
+        const data = await response.json();
+        setCategories(data);
+        setFilteredCategories(data);
+      } catch (error) {
+        console.error("Błąd podczas pobierania kategorii:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  const handleSearch = (text: string) => {
+    setSearchQuery(text);
+
+    const filteredData = categories.filter((category: Category) =>
+      category.category_name.toLowerCase().includes(text.toLowerCase())
+    );
+
+    setFilteredCategories(filteredData);
+  };
+
+  const handleCategoryPress = (categoryId: number) => {
+    router.push(`/screens/products?categoryId=${categoryId}`);
+  };
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search categories"
+          value={searchQuery}
+          onChangeText={handleSearch}
+          selectionColor="#013b3d"
+        />
+        <FontAwesome5
+          name="search"
+          size={22}
+          color="#013b3d"
+          style={styles.searchIcon}
+        />
+      </View>
+
+      <ScrollView contentContainerStyle={styles.gridContainer}>
+        {filteredCategories.map((category: Category, index) => (
+          <TouchableOpacity
+            key={index}
+            style={styles.gridItem}
+            onPress={() => handleCategoryPress(category.category_id)}
+          >
+            <Text style={styles.categoryText}>{category.category_name}</Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+
+      <View style={styles.navbar}>
+        <TouchableOpacity
+          style={styles.navButton}
+          onPress={() => router.navigate("/screens/map")}
+        >
+          <FontAwesome5 name="map-marked-alt" size={32} color="#013b3d" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.navButton}
+          onPress={() => router.navigate("/")}
+        >
+          <FontAwesome5 name="home" size={32} color="#013b3d" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.navButton}
+          onPress={() => router.navigate("/screens/cart")}
+        >
+          <FontAwesome5 name="shopping-basket" size={32} color="#013b3d" />
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#a0cbb3",
+  },
+  searchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#e8fefd",
+    width: 330,
+    borderRadius: 15,
+    paddingHorizontal: 15,
+    paddingVertical: 12,
+    marginBottom: 15,
+    marginTop: 80,
+    marginHorizontal: 50,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 20,
+    fontWeight: "500",
+    color: "#013b3d",
+    backgroundColor: "#e8fefd",
+    borderWidth: 1,
+    borderColor: "#e8fefd",
+  },
+  searchIcon: {
+    marginLeft: 10,
+  },
+  gridContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+  },
+  gridItem: {
+    width: 150,
+    height: 150,
+    margin: 15,
+    backgroundColor: "#e8fefd",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 15,
+  },
+  categoryText: {
+    fontSize: 18,
+    color: "#013b3d",
+    fontWeight: "600",
+    padding: 10,
+  },
+  navbar: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginHorizontal: 40,
+    paddingBottom: 50,
+    paddingTop: 30,
+  },
+  navButton: {
+    alignItems: "center",
+    backgroundColor: "#e8fefd",
+    padding: 15,
+    borderRadius: 15,
+  },
+});

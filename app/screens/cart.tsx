@@ -2,9 +2,9 @@ import React, { useLayoutEffect } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 
-export default function Home() {
+export default function Cart() {
   const router = useRouter();
   const navigation = useNavigation();
 
@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <View style={styles.container}>
       <Image
-        source={require("../assets/images/logo.png")}
+        source={require("../../assets/images/logo.png")}
         style={styles.logo}
       />
 
@@ -27,10 +27,7 @@ export default function Home() {
         Fill your cart, follow the trail, and make your shopping faster!
       </Text>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => router.push("/screens/categories")}
-      >
+      <TouchableOpacity style={styles.button} onPress={() => router.push("/")}>
         <Text style={styles.buttonText}>Get Started</Text>
         <AntDesign name="right" size={24} style={styles.icon} />
       </TouchableOpacity>
