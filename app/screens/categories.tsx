@@ -7,9 +7,9 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import { Category } from "../models/Category";
-import { Link, useNavigation, useRouter } from "expo-router";
+import { useNavigation, useRouter } from "expo-router";
 
 export default function Categories() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -102,6 +102,12 @@ export default function Categories() {
         >
           <FontAwesome5 name="shopping-basket" size={32} color="#013b3d" />
         </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.navButton}
+          onPress={() => router.navigate("/screens/login")}
+        >
+          <FontAwesome name="user" size={32} color="#013b3d" />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -161,7 +167,7 @@ const styles = StyleSheet.create({
   navbar: {
     flexDirection: "row",
     justifyContent: "space-around",
-    marginHorizontal: 40,
+    marginHorizontal: 30,
     paddingBottom: 50,
     paddingTop: 30,
   },
@@ -170,5 +176,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#e8fefd",
     padding: 15,
     borderRadius: 15,
+    width: 66,
+    height: 62,
   },
 });
