@@ -76,7 +76,31 @@ export default function Products() {
   };
 
   function addToCart(product: Product) {
-    Alert.alert(`"${product.name}" has been added to your cart.`);
+    const newCartItem = {
+      cart_id: 1,
+      product_id: product.product_id,
+      quantity: 1,
+    };
+
+    fetch("http://localhost:3000/cart-items", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newCartItem),
+    })
+      .then((response: Response) => {
+        if (response.ok) {
+          Alert.alert(`"${product.name}" has been added to your cart.`);
+        } else {
+          throw new Error(
+            `Błąd podczas dodawania do koszyka: ${response.statusText}`
+          );
+        }
+      })
+      .catch((error) => {
+        console.error("Błąd:", error);
+      });
   }
 
   return (
@@ -98,15 +122,17 @@ export default function Products() {
       </View>
 
       <ScrollView contentContainerStyle={styles.gridContainer}>
-        {filteredProducts.map((product: Product, index) => (
+        {filteredProducts.map((product: Product, index: number) => (
           <View key={index} style={styles.gridItem}>
-            <Text style={styles.productText}>{product.name}</Text>
+            <View style={styles.productNameContainer}>
+              <Text style={styles.productText}>{product.name}</Text>
+            </View>
             <Text style={styles.productText}>
               {product.price + " $ / " + getUnitSymbol(product.unit_id)}
             </Text>
             <Text style={styles.productText} onPress={() => addToCart(product)}>
-              <Entypo
-                name="squared-plus"
+              <FontAwesome5
+                name="plus-square"
                 size={26}
                 color="#013b3d"
                 style={styles.searchIcon}
@@ -188,12 +214,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 15,
   },
+  productNameContainer: {
+    height: 55,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   productText: {
     fontSize: 18,
     color: "#013b3d",
     fontWeight: "600",
     padding: 5,
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
+    textAlign: "center",
   },
   navbar: {
     flexDirection: "row",

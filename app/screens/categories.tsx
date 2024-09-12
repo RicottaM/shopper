@@ -72,7 +72,7 @@ export default function Categories() {
       </View>
 
       <ScrollView contentContainerStyle={styles.gridContainer}>
-        {filteredCategories.map((category: Category, index) => (
+        {filteredCategories.map((category: Category, index: number) => (
           <TouchableOpacity
             key={index}
             style={styles.gridItem}
@@ -154,6 +154,7 @@ const styles = StyleSheet.create({
   categoryText: {
     fontSize: 18,
     color: "#013b3d",
+    textAlign: "center",
     fontWeight: "600",
     padding: 10,
   },

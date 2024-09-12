@@ -6,10 +6,8 @@ export interface Product {
   description: string;
   price: string;
   category_id: number;
-  category_name: string;
   section_id: number;
   availability: string;
   amount: string;
   unit_id: number;
-  unit: Unit;
 }
