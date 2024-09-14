@@ -1,6 +1,8 @@
 import express from 'express';
 import 'dotenv/config';
+import cookieParser from 'cookie-parser';
 import { DatabaseConnector } from './db/connect.js';
+import { authRouter } from './api/auth/auth.router.js';  // Import the new authRouter
 import { userRouter } from './api/users/user.router.js';
 import { productRouter } from './api/products/product.router.js';
 import { categoryRouter } from './api/categories/category.router.js';
@@ -15,14 +17,18 @@ const port = process.env.SERVER_PORT || 3003;
 await DatabaseConnector.connect();
 
 app.use(express.json());
+app.use(cookieParser());
 
+// Use the new authRouter
+app.use('/auth', authRouter);
+
+// All other routers (which require authentication)
 app.use('/users', userRouter);
 app.use('/products', productRouter);
 app.use('/categories', categoryRouter);
 app.use('/sections', sectionRouter);
 app.use('/cart-items', cartItemRouter);
 app.use('/carts', cartRouter);
-
 
 app.use(errorHandler);
 
