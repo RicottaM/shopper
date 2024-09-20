@@ -14,6 +14,13 @@ export default function Home() {
     });
   }, [navigation]);
 
+  function handleGetStarted() {
+    // sprawdzamy czy uzytkownik jest zalogowany juz w cookies i czy ma token
+    // 1. jesli jest zalogowany to przechodzimy do categories
+    // 2. jesli nie to przenosimy do ekranu z logowaniem
+    router.push("/screens/login");
+  }
+
   return (
     <View style={styles.container}>
       <Image
@@ -27,10 +34,7 @@ export default function Home() {
         Fill your cart, follow the trail, and make your shopping faster!
       </Text>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => router.push("/screens/categories")}
-      >
+      <TouchableOpacity style={styles.button} onPress={handleGetStarted}>
         <Text style={styles.buttonText}>Get Started</Text>
         <AntDesign name="right" size={24} style={styles.icon} />
       </TouchableOpacity>

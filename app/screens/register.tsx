@@ -5,14 +5,14 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  Alert,
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation, useRouter } from "expo-router";
+import { Image } from "react-native";
+import { Header } from "@react-navigation/stack";
 
-export default function Login() {
-  const [login, setLogin] = useState("");
-  const [password, setPassword] = useState("");
+export default function Register() {
+  const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
   const navigation = useNavigation();
 
@@ -21,33 +21,6 @@ export default function Login() {
       headerShown: false,
     });
   }, [navigation]);
-
-  const handleLogin = async () => {
-    //try {
-    // const response = await fetch("http://localhost:3000/auth/login", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     email: login,
-    //     password,
-    //   }),
-    //   credentials: "include",
-    // });
-
-    // const data = await response.json();
-
-    //if (data.success) {
-    router.push("/screens/categories");
-    // } else {
-    //   Alert.alert("Invalid login or password.");
-    // }
-    // } catch (error) {
-    //   console.error("Błąd podczas logowania:", error);
-    //   Alert.alert("Error during login. Please try again.");
-    // }
-  };
 
   return (
     <View style={styles.container}>
@@ -63,8 +36,6 @@ export default function Login() {
             keyboardType="email-address"
             autoCapitalize="none"
             selectionColor="#013b3d"
-            value={login}
-            onChangeText={setLogin}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -73,19 +44,21 @@ export default function Login() {
             placeholder="Password"
             secureTextEntry
             selectionColor="#013b3d"
-            value={password}
-            onChangeText={setPassword}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Repeat password"
+            secureTextEntry
+            selectionColor="#013b3d"
           />
         </View>
 
-        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+        <TouchableOpacity style={styles.loginButton}>
           <Text style={styles.loginButtonText}>Login</Text>
         </TouchableOpacity>
       </View>
-
-      <TouchableOpacity onPress={() => router.push("/screens/register")}>
-        <Text style={styles.signupText}>Don't have an account? Sign up!</Text>
-      </TouchableOpacity>
 
       <View style={styles.navbar}>
         <TouchableOpacity

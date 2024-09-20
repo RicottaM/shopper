@@ -9,7 +9,7 @@ import {
   Alert,
 } from "react-native";
 import { useNavigation, useRouter, useLocalSearchParams } from "expo-router";
-import { Entypo, Feather, FontAwesome5 } from "@expo/vector-icons";
+import { Entypo, Feather, FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import { Product } from "../models/Product";
 import { Unit } from "../models/Unit";
 
@@ -131,7 +131,7 @@ export default function Products() {
               {product.price + " $ / " + getUnitSymbol(product.unit_id)}
             </Text>
             <Text style={styles.productText} onPress={() => addToCart(product)}>
-              <FontAwesome5
+              <Feather
                 name="plus-square"
                 size={26}
                 color="#013b3d"
@@ -164,6 +164,12 @@ export default function Products() {
             size={navIconSize}
             color="#013b3d"
           />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.navButton}
+          onPress={() => router.navigate("/screens/login")}
+        >
+          <FontAwesome name="user" size={32} color="#013b3d" />
         </TouchableOpacity>
       </View>
     </View>
@@ -237,7 +243,10 @@ const styles = StyleSheet.create({
   navButton: {
     alignItems: "center",
     backgroundColor: "#e8fefd",
+    marginHorizontal: 15,
     padding: 15,
     borderRadius: 15,
+    width: 66,
+    height: 62,
   },
 });

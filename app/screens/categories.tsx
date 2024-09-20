@@ -65,7 +65,7 @@ export default function Categories() {
         />
         <FontAwesome5
           name="search"
-          size={22}
+          size={26}
           color="#013b3d"
           style={styles.searchIcon}
         />

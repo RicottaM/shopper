@@ -7,7 +7,12 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import { FontAwesome5, FontAwesome6 } from "@expo/vector-icons";
+import {
+  Feather,
+  FontAwesome,
+  FontAwesome5,
+  FontAwesome6,
+} from "@expo/vector-icons";
 import { useNavigation, useRouter } from "expo-router";
 import { CartItem } from "../models/CartItem";
 import { Product } from "../models/Product";
@@ -164,8 +169,8 @@ export default function Cart() {
               style={styles.productText}
               onPress={() => removeFromCart(product)}
             >
-              <FontAwesome6
-                name="minus-square"
+              <Feather
+                name="x-square"
                 size={26}
                 color="#013b3d"
                 style={styles.searchIcon}
@@ -193,6 +198,12 @@ export default function Cart() {
           //onPress={() => router.navigate("/screens/navigation")}
         >
           <FontAwesome5 name="flag-checkered" size={32} color="#013b3d" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.navButton}
+          onPress={() => router.navigate("/screens/login")}
+        >
+          <FontAwesome name="user" size={32} color="#013b3d" />
         </TouchableOpacity>
       </View>
     </View>
@@ -277,7 +288,10 @@ const styles = StyleSheet.create({
   navButton: {
     alignItems: "center",
     backgroundColor: "#e8fefd",
+    marginHorizontal: 15,
     padding: 15,
     borderRadius: 15,
+    width: 66,
+    height: 62,
   },
 });
