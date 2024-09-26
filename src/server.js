@@ -8,6 +8,7 @@ import { productRouter } from './api/products/product.router.js';
 import { categoryRouter } from './api/categories/category.router.js';
 import { sectionRouter } from './api/sections/section.router.js';
 import { cartItemRouter } from './api/cartItems/cartItem.router.js';
+import { unitRouter } from './api/units/unit.router.js';
 import { cartRouter } from './api/carts/cart.router.js';
 import { errorHandler } from './error/error-handler.js';
 
@@ -29,6 +30,7 @@ app.use('/categories', categoryRouter);
 app.use('/sections', sectionRouter);
 app.use('/cart-items', cartItemRouter);
 app.use('/carts', cartRouter);
+app.use('/units', unitRouter);
 
 app.use(errorHandler);
 
