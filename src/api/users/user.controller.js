@@ -66,14 +66,8 @@ export const userController = {
     try {
       const { email, password } = req.body;
       const { user, token } = await userService.login(email, password);
-      
-      res.cookie('token', token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
-      });
 
-      res.json({ message: 'Logged in successfully', user });
+      res.json({ message: 'Logged in successfully', user, token: token });
     } catch (error) {
       next(error);
     }

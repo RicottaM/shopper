@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import { ErrorWithStatus } from '../error/error-with-status.js';
 
 export const authMiddleware = (req, res, next) => {
-  const token = req.cookies.token;
+  const token = req.body.token;
 
   if (!token) {
     throw new ErrorWithStatus('Authentication required', 401);
