@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     paddingBottom: 50, // Odstęp od dołu
     paddingTop: 30, // Wewnętrzny odstęp od góry
-    bottom: -625, // Pozycja navbaru
+    bottom: -635, // Pozycja navbaru
   },
   navButton: {
     alignItems: 'center',
