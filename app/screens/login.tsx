@@ -15,7 +15,7 @@ export default function Login() {
 
   const saveAppData = useSaveAppData();
   const getAppData = useGetAppData();
-  const handleNavbarPress = useHandleRouteChange();
+  const handleRouteChange = useHandleRouteChange();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -40,10 +40,8 @@ export default function Login() {
 
     if (authData.user) {
       await saveAppData('username', authData.user.first_name, 30);
-      const savedUsername = await getAppData('username');
-      console.log('useHandleRouteChangeame:', savedUsername);
 
-      router.push('/screens/categories');
+      handleRouteChange(Screens.Categories);
     } else {
       Alert.alert(authData.message);
     }
@@ -77,21 +75,21 @@ export default function Login() {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity onPress={() => handleNavbarPress(Screens.Register)}>
+      <TouchableOpacity onPress={() => handleRouteChange(Screens.Register)}>
         <Text style={styles.signupText}>Don't have an account? Sign up!</Text>
       </TouchableOpacity>
 
       <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navButton} onPress={() => handleNavbarPress(Screens.Map)}>
+        <TouchableOpacity style={styles.navButton} onPress={() => handleRouteChange(Screens.Map)}>
           <FontAwesome5 name="map-marked-alt" size={32} color="#013b3d" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/')}>
           <FontAwesome5 name="home" size={32} color="#013b3d" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton} onPress={() => handleNavbarPress(Screens.Cart)}>
+        <TouchableOpacity style={styles.navButton} onPress={() => handleRouteChange(Screens.Cart)}>
           <FontAwesome5 name="shopping-basket" size={32} color="#013b3d" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton} onPress={() => handleNavbarPress(Screens.Categories)}>
+        <TouchableOpacity style={styles.navButton} onPress={() => handleRouteChange(Screens.Categories)}>
           <FontAwesome5 name="th-list" size={32} color="#013b3d" />
         </TouchableOpacity>
       </View>

@@ -6,6 +6,7 @@ import * as SecureStore from 'expo-secure-store';
 import { Screens } from '../enum/screens';
 import { Image } from 'react-native';
 import { useGetAppData } from '../hooks/useGetAppData';
+import { useHandleRouteChange } from '../hooks/useHandleRouteChange';
 
 export default function User() {
   const [username, setUsername] = useState('');
@@ -13,6 +14,7 @@ export default function User() {
   const navigation = useNavigation();
 
   const getAppData = useGetAppData();
+  const handleRouteChange = useHandleRouteChange();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -27,10 +29,6 @@ export default function User() {
       setUsername(username);
     })();
   }, []);
-
-  const handleNavbarPress = async (screen: Screens) => {
-    router.push(`/screens/${screen}`);
-  };
 
   async function handleLogout() {
     await deleteUserData();
@@ -57,16 +55,16 @@ export default function User() {
       </View>
 
       <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navButton} onPress={() => handleNavbarPress(Screens.Map)}>
+        <TouchableOpacity style={styles.navButton} onPress={() => handleRouteChange(Screens.Map)}>
           <FontAwesome5 name="map-marked-alt" size={32} color="#013b3d" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/')}>
           <FontAwesome5 name="home" size={32} color="#013b3d" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton} onPress={() => handleNavbarPress(Screens.Cart)}>
+        <TouchableOpacity style={styles.navButton} onPress={() => handleRouteChange(Screens.Cart)}>
           <FontAwesome5 name="shopping-basket" size={32} color="#013b3d" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton} onPress={() => handleNavbarPress(Screens.Categories)}>
+        <TouchableOpacity style={styles.navButton} onPress={() => handleRouteChange(Screens.Categories)}>
           <FontAwesome5 name="th-list" size={32} color="#013b3d" />
         </TouchableOpacity>
       </View>
@@ -77,7 +75,6 @@ export default function User() {
 const styles = StyleSheet.create({
   content: {
     height: 400,
-    justifyContent: 'center',
   },
   userName: {
     color: '#013b3d',

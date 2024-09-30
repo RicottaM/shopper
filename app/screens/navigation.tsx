@@ -9,7 +9,7 @@ export default function Navigation() {
   const router = useRouter();
   const navigation = useNavigation();
 
-  const handleNavbarPress = useHandleRouteChange();
+  const handleRoutePress = useHandleRouteChange();
 
   useLayoutEffect(() => {
     navigation.setOptions({

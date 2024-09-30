@@ -7,6 +7,7 @@ import { Product } from '../models/Product';
 import { Unit } from '../models/Unit';
 import { useGetAppData } from '../hooks/useGetAppData';
 import { Screens } from '../enum/screens';
+import { useHandleRouteChange } from '../hooks/useHandleRouteChange';
 
 export default function Cart() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -18,6 +19,7 @@ export default function Cart() {
   const navigation = useNavigation();
 
   const getAppData = useGetAppData();
+  const handleRouteChange = useHandleRouteChange();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -112,10 +114,6 @@ export default function Cart() {
     return productUnit ? productUnit.unit_symbol : '-';
   };
 
-  const handleNavbarPress = async (screen: Screens) => {
-    router.push(`/screens/${screen}`);
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
@@ -144,10 +142,10 @@ export default function Cart() {
         <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/')}>
           <FontAwesome5 name="home" size={32} color="#013b3d" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton} onPress={() => handleNavbarPress(Screens.Navigation)}>
+        <TouchableOpacity style={styles.navButton} onPress={() => handleRouteChange(Screens.Navigation)}>
           <FontAwesome5 name="flag-checkered" size={32} color="#013b3d" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton} onPress={() => handleNavbarPress(Screens.User)}>
+        <TouchableOpacity style={styles.navButton} onPress={() => handleRouteChange(Screens.User)}>
           <FontAwesome name="user" size={32} color="#013b3d" />
         </TouchableOpacity>
       </View>

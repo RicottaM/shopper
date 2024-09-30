@@ -19,7 +19,7 @@ export default function Products() {
   const navIconSize = 32;
 
   const getAppData = useGetAppData();
-  const handleNavbarPress = useHandleRouteChange();
+  const handleRouteChange = useHandleRouteChange();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -117,16 +117,16 @@ export default function Products() {
       </ScrollView>
 
       <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navButton} onPress={() => handleNavbarPress(Screens.Categories)}>
+        <TouchableOpacity style={styles.navButton} onPress={() => handleRouteChange(Screens.Categories)}>
           <FontAwesome5 name="th-list" size={navIconSize} color="#013b3d" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.navButton} onPress={() => router.push('/')}>
           <FontAwesome5 name="home" size={navIconSize} color="#013b3d" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton} onPress={() => handleNavbarPress(Screens.Cart)}>
+        <TouchableOpacity style={styles.navButton} onPress={() => handleRouteChange(Screens.Cart)}>
           <FontAwesome5 name="shopping-basket" size={navIconSize} color="#013b3d" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton} onPress={() => handleNavbarPress(Screens.User)}>
+        <TouchableOpacity style={styles.navButton} onPress={() => handleRouteChange(Screens.User)}>
           <FontAwesome name="user" size={32} color="#013b3d" />
         </TouchableOpacity>
       </View>
