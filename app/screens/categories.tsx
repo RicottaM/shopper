@@ -1,22 +1,20 @@
-import React, { useEffect, useState, useLayoutEffect } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
-import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
-import { Category } from "../models/Category";
-import { useNavigation, useRouter } from "expo-router";
+import React, { useEffect, useState, useLayoutEffect } from 'react';
+import { View, Text, TextInput, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
+import { Category } from '../models/Category';
+import * as SecureStore from 'expo-secure-store';
+import { useNavigation, useRouter } from 'expo-router';
+import { Screens } from '../enum/screens';
+import { useHandleRouteChange } from '../hooks/useHandleRouteChange';
 
 export default function Categories() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filteredCategories, setFilteredCategories] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredCategories, setFilteredCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const router = useRouter();
   const navigation = useNavigation();
+
+  const handleNavbarPress = useHandleRouteChange();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -27,12 +25,13 @@ export default function Categories() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch("http://localhost:3000/categories");
+        const response = await fetch('http://localhost:3000/categories');
         const data = await response.json();
+
         setCategories(data);
         setFilteredCategories(data);
       } catch (error) {
-        console.error("Błąd podczas pobierania kategorii:", error);
+        console.error('Błąd podczas pobierania kategorii:', error);
       }
     };
 
@@ -42,9 +41,7 @@ export default function Categories() {
   const handleSearch = (text: string) => {
     setSearchQuery(text);
 
-    const filteredData = categories.filter((category: Category) =>
-      category.category_name.toLowerCase().includes(text.toLowerCase())
-    );
+    const filteredData = categories.filter((category: Category) => category.category_name.toLowerCase().includes(text.toLowerCase()));
 
     setFilteredCategories(filteredData);
   };
@@ -56,56 +53,29 @@ export default function Categories() {
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search categories"
-          value={searchQuery}
-          onChangeText={handleSearch}
-          selectionColor="#013b3d"
-        />
-        <FontAwesome5
-          name="search"
-          size={26}
-          color="#013b3d"
-          style={styles.searchIcon}
-        />
+        <TextInput style={styles.searchInput} placeholder="Search categories" value={searchQuery} onChangeText={handleSearch} selectionColor="#013b3d" />
+        <FontAwesome5 name="search" size={26} color="#013b3d" style={styles.searchIcon} />
       </View>
 
       <ScrollView contentContainerStyle={styles.gridContainer}>
         {filteredCategories.map((category: Category, index: number) => (
-          <TouchableOpacity
-            key={index}
-            style={styles.gridItem}
-            onPress={() => handleCategoryPress(category.category_id)}
-          >
+          <TouchableOpacity key={index} style={styles.gridItem} onPress={() => handleCategoryPress(category.category_id)}>
             <Text style={styles.categoryText}>{category.category_name}</Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
 
       <View style={styles.navbar}>
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={() => router.navigate("/screens/map")}
-        >
+        <TouchableOpacity style={styles.navButton} onPress={() => handleNavbarPress(Screens.Map)}>
           <FontAwesome5 name="map-marked-alt" size={32} color="#013b3d" />
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={() => router.navigate("/")}
-        >
+        <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/')}>
           <FontAwesome5 name="home" size={32} color="#013b3d" />
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={() => router.navigate("/screens/cart")}
-        >
+        <TouchableOpacity style={styles.navButton} onPress={() => handleNavbarPress(Screens.Cart)}>
           <FontAwesome5 name="shopping-basket" size={32} color="#013b3d" />
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={() => router.navigate("/screens/login")}
-        >
+        <TouchableOpacity style={styles.navButton} onPress={() => handleNavbarPress(Screens.User)}>
           <FontAwesome name="user" size={32} color="#013b3d" />
         </TouchableOpacity>
       </View>
@@ -116,13 +86,13 @@ export default function Categories() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#a0cbb3",
+    backgroundColor: '#a0cbb3',
   },
   searchContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#e8fefd",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#e8fefd',
     width: 330,
     borderRadius: 15,
     paddingHorizontal: 15,
@@ -134,46 +104,46 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     fontSize: 20,
-    fontWeight: "500",
-    color: "#013b3d",
-    backgroundColor: "#e8fefd",
+    fontWeight: '500',
+    color: '#013b3d',
+    backgroundColor: '#e8fefd',
     borderWidth: 1,
-    borderColor: "#e8fefd",
+    borderColor: '#e8fefd',
   },
   searchIcon: {
     marginLeft: 10,
   },
   gridContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
   },
   gridItem: {
     width: 150,
     height: 150,
     margin: 15,
-    backgroundColor: "#e8fefd",
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: '#e8fefd',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 15,
   },
   categoryText: {
     fontSize: 18,
-    color: "#013b3d",
-    textAlign: "center",
-    fontWeight: "600",
+    color: '#013b3d',
+    textAlign: 'center',
+    fontWeight: '600',
     padding: 10,
   },
   navbar: {
-    flexDirection: "row",
-    justifyContent: "space-around",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     marginHorizontal: 30,
     paddingBottom: 50,
     paddingTop: 30,
   },
   navButton: {
-    alignItems: "center",
-    backgroundColor: "#e8fefd",
+    alignItems: 'center',
+    backgroundColor: '#e8fefd',
     padding: 15,
     borderRadius: 15,
     width: 66,

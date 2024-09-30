@@ -1,12 +1,20 @@
-import React, { useLayoutEffect } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import { Link, useRouter } from "expo-router";
+import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { Link, useRouter } from 'expo-router';
+import { useGetAppData } from './hooks/useGetAppData';
+import { useHandleRouteChange } from './hooks/useHandleRouteChange';
+import { Screens } from './enum/screens';
 
 export default function Home() {
   const router = useRouter();
   const navigation = useNavigation();
+
+  const getAppData = useGetAppData();
+  const handleRouteChange = useHandleRouteChange();
+
+  const [username, setUsername] = useState('');
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -14,25 +22,29 @@ export default function Home() {
     });
   }, [navigation]);
 
-  function handleGetStarted() {
-    // sprawdzamy czy uzytkownik jest zalogowany juz w cookies i czy ma token
-    // 1. jesli jest zalogowany to przechodzimy do categories
-    // 2. jesli nie to przenosimy do ekranu z logowaniem
-    router.push("/screens/login");
+  useEffect(() => {
+    (async () => {
+      const userData = await getAppData('username');
+
+      setUsername(userData);
+    })();
+  }, []);
+
+  async function handleGetStarted() {
+    if (username) {
+      handleRouteChange(Screens.User);
+    } else {
+      handleRouteChange(Screens.Login);
+    }
   }
 
   return (
     <View style={styles.container}>
-      <Image
-        source={require("../assets/images/logo.png")}
-        style={styles.logo}
-      />
+      <Image source={require('../assets/images/logo.png')} style={styles.logo} />
 
       <Text style={styles.header}>Welcome to Shopper</Text>
 
-      <Text style={styles.paragraph}>
-        Fill your cart, follow the trail, and make your shopping faster!
-      </Text>
+      <Text style={styles.paragraph}>Fill your cart, follow the trail, and make your shopping faster!</Text>
 
       <TouchableOpacity style={styles.button} onPress={handleGetStarted}>
         <Text style={styles.buttonText}>Get Started</Text>
@@ -45,8 +57,8 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    backgroundColor: "#a0cbb3",
+    alignItems: 'center',
+    backgroundColor: '#a0cbb3',
   },
   logo: {
     width: 230,
@@ -56,22 +68,22 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 30,
-    fontWeight: "bold",
-    color: "#013b3d",
+    fontWeight: 'bold',
+    color: '#013b3d',
     marginTop: 70,
   },
   paragraph: {
     fontSize: 20,
     marginHorizontal: 20,
-    color: "#013b3d",
-    textAlign: "center",
+    color: '#013b3d',
+    textAlign: 'center',
     marginTop: 30,
     paddingHorizontal: 20,
   },
   button: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#e8fefd",
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#e8fefd',
     paddingVertical: 20,
     paddingHorizontal: 24,
     marginTop: 100,
@@ -79,12 +91,12 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 24,
-    fontWeight: "500",
-    color: "#013b3d",
+    fontWeight: '500',
+    color: '#013b3d',
   },
   icon: {
     marginTop: 2,
     marginLeft: 6,
-    color: "#013b3d",
+    color: '#013b3d',
   },
 });

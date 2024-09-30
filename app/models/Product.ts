@@ -1,4 +1,4 @@
-import { Unit } from "./Unit";
+import { Unit } from './Unit';
 
 export interface Product {
   product_id: number;

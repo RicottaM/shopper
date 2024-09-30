@@ -1,20 +1,21 @@
-import React, { useState, useLayoutEffect } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { useNavigation, useRouter } from "expo-router";
+import React, { useState, useLayoutEffect, useCallback } from 'react';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { useNavigation, useRouter } from 'expo-router';
+import { Screens } from '../enum/screens';
+import { useGetAppData } from '../hooks/useGetAppData';
+import { useSaveAppData } from '../hooks/useSaveAppData';
+import { useHandleRouteChange } from '../hooks/useHandleRouteChange';
 
 export default function Login() {
-  const [login, setLogin] = useState("");
-  const [password, setPassword] = useState("");
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
   const router = useRouter();
   const navigation = useNavigation();
+
+  const saveAppData = useSaveAppData();
+  const getAppData = useGetAppData();
+  const handleNavbarPress = useHandleRouteChange();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -23,43 +24,43 @@ export default function Login() {
   }, [navigation]);
 
   const handleLogin = async () => {
-    //try {
-    // const response = await fetch("http://localhost:3000/auth/login", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     email: login,
-    //     password,
-    //   }),
-    //   credentials: "include",
-    // });
+    const response = await fetch('http://localhost:3000/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: login,
+        password: password,
+      }),
+      credentials: 'include', // to include cookies
+    });
 
-    // const data = await response.json();
+    const authData = await response.json();
 
-    //if (data.success) {
-    router.push("/screens/categories");
-    // } else {
-    //   Alert.alert("Invalid login or password.");
-    // }
-    // } catch (error) {
-    //   console.error("Błąd podczas logowania:", error);
-    //   Alert.alert("Error during login. Please try again.");
-    // }
+    if (authData.user) {
+      await saveAppData('username', authData.user.first_name, 30);
+      const savedUsername = await getAppData('username');
+      console.log('useHandleRouteChangeame:', savedUsername);
+
+      router.push('/screens/categories');
+    } else {
+      Alert.alert(authData.message);
+    }
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>Sign in</Text>
+        <Text style={styles.headerText1}>Sign </Text>
+        <Text style={styles.headerText2}>In</Text>
       </View>
 
       <View style={styles.formContainer}>
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
-            placeholder="Login"
+            placeholder="Email"
             keyboardType="email-address"
             autoCapitalize="none"
             selectionColor="#013b3d"
@@ -68,14 +69,7 @@ export default function Login() {
           />
         </View>
         <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Password"
-            secureTextEntry
-            selectionColor="#013b3d"
-            value={password}
-            onChangeText={setPassword}
-          />
+          <TextInput style={styles.input} placeholder="Password" secureTextEntry selectionColor="#013b3d" value={password} onChangeText={setPassword} />
         </View>
 
         <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
@@ -83,33 +77,21 @@ export default function Login() {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity onPress={() => router.push("/screens/register")}>
+      <TouchableOpacity onPress={() => handleNavbarPress(Screens.Register)}>
         <Text style={styles.signupText}>Don't have an account? Sign up!</Text>
       </TouchableOpacity>
 
       <View style={styles.navbar}>
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={() => router.navigate("/screens/map")}
-        >
+        <TouchableOpacity style={styles.navButton} onPress={() => handleNavbarPress(Screens.Map)}>
           <FontAwesome5 name="map-marked-alt" size={32} color="#013b3d" />
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={() => router.navigate("/")}
-        >
+        <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/')}>
           <FontAwesome5 name="home" size={32} color="#013b3d" />
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={() => router.navigate("/screens/cart")}
-        >
+        <TouchableOpacity style={styles.navButton} onPress={() => handleNavbarPress(Screens.Cart)}>
           <FontAwesome5 name="shopping-basket" size={32} color="#013b3d" />
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={() => router.push("/screens/categories")}
-        >
+        <TouchableOpacity style={styles.navButton} onPress={() => handleNavbarPress(Screens.Categories)}>
           <FontAwesome5 name="th-list" size={32} color="#013b3d" />
         </TouchableOpacity>
       </View>
@@ -120,26 +102,43 @@ export default function Login() {
 const styles = StyleSheet.create({
   headerContainer: {
     marginTop: 100,
-    marginBottom: 10,
-    fontWeight: "bold",
+    marginBottom: 20,
+    fontWeight: 'bold',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  headerText: {
+  logo: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    right: 20,
+  },
+  headerText1: {
     fontSize: 36,
-    color: "#013b3d",
-    fontWeight: "600",
+    color: '#013b3d',
+    fontWeight: '600',
+    letterSpacing: 4,
+    top: 20,
+  },
+  headerText2: {
+    fontSize: 36,
+    color: '#013b3d',
+    fontWeight: '600',
+    letterSpacing: 4,
+    top: 20,
   },
   container: {
     flex: 1,
-    backgroundColor: "#a0cbb3",
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: '#a0cbb3',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   formContainer: {
-    width: "70%",
+    width: '70%',
     marginTop: 20,
   },
   inputContainer: {
-    backgroundColor: "#e8fefd",
+    backgroundColor: '#e8fefd',
     borderRadius: 15,
     paddingTop: 15,
     paddingHorizontal: 15,
@@ -148,39 +147,39 @@ const styles = StyleSheet.create({
   input: {
     fontSize: 20,
     marginBottom: 15,
-    color: "#013b3d",
-    fontWeight: "500",
+    color: '#013b3d',
+    fontWeight: '500',
   },
   loginButton: {
-    backgroundColor: "#013b3d",
+    backgroundColor: '#013b3d',
     padding: 10,
     borderRadius: 15,
-    alignItems: "center",
+    alignItems: 'center',
   },
   loginButtonText: {
-    color: "#ffffff",
+    color: '#ffffff',
     fontSize: 20,
-    fontWeight: "500",
+    fontWeight: '500',
     borderRadius: 10,
     paddingVertical: 5,
   },
   signupText: {
-    color: "#013b3d",
-    fontWeight: "500",
+    color: '#013b3d',
+    fontWeight: '500',
     fontSize: 16,
     marginTop: 15,
   },
   navbar: {
-    flexDirection: "row",
-    justifyContent: "space-around",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     marginHorizontal: 30,
     paddingBottom: 50,
     paddingTop: 30,
-    bottom: -200,
+    bottom: -190,
   },
   navButton: {
-    alignItems: "center",
-    backgroundColor: "#e8fefd",
+    alignItems: 'center',
+    backgroundColor: '#e8fefd',
     marginHorizontal: 15,
     padding: 15,
     borderRadius: 15,
