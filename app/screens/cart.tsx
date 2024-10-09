@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
-import { Feather, FontAwesome, FontAwesome5, FontAwesome6 } from '@expo/vector-icons';
+import { Feather, FontAwesome, FontAwesome5, FontAwesome6, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation, useRouter } from 'expo-router';
 import { CartItem } from '../models/cartItem.model';
 import { Product } from '../models/product.model';
@@ -156,8 +156,8 @@ export default function Cart() {
         <TouchableOpacity style={styles.navButton} onPress={() => router.back()}>
           <FontAwesome5 name="arrow-circle-left" size={32} color="#013b3d" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/')}>
-          <FontAwesome5 name="home" size={32} color="#013b3d" />
+        <TouchableOpacity style={styles.navButton} onPress={() => handleRouteChange(Screens.Code)}>
+          <MaterialCommunityIcons name="qrcode-scan" size={32} color="#013b3d" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.navButton} onPress={() => handleRouteChange(Screens.Navigation)}>
           <FontAwesome5 name="flag-checkered" size={32} color="#013b3d" />

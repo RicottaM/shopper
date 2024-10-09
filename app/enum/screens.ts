@@ -7,4 +7,5 @@ export enum Screens {
   User = 'user',
   Login = 'login',
   Register = 'register',
+  Code = 'code',
 }
