@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
-import { Category } from '../models/Category';
+import { Category } from '../models/category.model';
 import * as SecureStore from 'expo-secure-store';
 import { useNavigation, useRouter } from 'expo-router';
 import { Screens } from '../enum/screens';

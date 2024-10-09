@@ -40,6 +40,7 @@ export default function Login() {
 
     if (authData.user) {
       await saveAppData('username', authData.user.first_name, 30);
+      await saveAppData('userId', authData.user.user_id, 30);
 
       handleRouteChange(Screens.Categories);
     } else {

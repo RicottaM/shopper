@@ -41,6 +41,7 @@ export default function User() {
 
   const deleteUserData = async () => {
     await SecureStore.deleteItemAsync('username');
+    await SecureStore.deleteItemAsync('userId');
   };
 
   return (

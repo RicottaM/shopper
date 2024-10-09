@@ -75,8 +75,7 @@ export default function Register() {
 
     if (authData.user) {
       await saveAppData('username', authData.user.first_name, 30);
-      const username = await getAppData('username');
-      console.log(username);
+      await saveAppData('userId', authData.user.user_id, 30);
 
       router.push('/screens/categories');
     } else {

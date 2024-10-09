@@ -1,18 +1,20 @@
 import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation, useRouter, useLocalSearchParams } from 'expo-router';
-import { Entypo, Feather, FontAwesome, FontAwesome5 } from '@expo/vector-icons';
-import { Product } from '../models/Product';
-import { Unit } from '../models/Unit';
+import { Feather, FontAwesome, FontAwesome5 } from '@expo/vector-icons';
+import { Product } from '../models/product.model';
+import { Unit } from '../models/unit.model';
+import { CartModel } from '../models/cart.model';
 import { useGetAppData } from '../hooks/useGetAppData';
 import { Screens } from '../enum/screens';
 import { useHandleRouteChange } from '../hooks/useHandleRouteChange';
 
 export default function Products() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [units, setUnits] = useState<Unit[]>([]);
+  const [quantities, setQuantities] = useState<{ [productId: number]: number }>({});
   const { categoryId } = useLocalSearchParams();
   const router = useRouter();
   const navigation = useNavigation();
@@ -59,7 +61,6 @@ export default function Products() {
     setSearchQuery(text);
 
     const filteredData = products.filter((product: Product) => product.name.toLowerCase().includes(text.toLowerCase()));
-
     setFilteredProducts(filteredData);
   };
 
@@ -69,31 +70,71 @@ export default function Products() {
     return productUnit ? productUnit.unit_symbol : '-';
   };
 
-  function addToCart(product: Product) {
-    const newCartItem = {
-      cart_id: 1,
-      product_id: product.product_id,
-      quantity: 1,
-    };
+  const handleQuantityChange = (productId: number, value: number) => {
+    if (value >= 0) {
+      setQuantities((prevQuantities) => ({
+        ...prevQuantities,
+        [productId]: value,
+      }));
+    }
+  };
 
-    fetch('http://localhost:3000/cart-items', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newCartItem),
-    })
-      .then((response: Response) => {
-        if (response.ok) {
-          Alert.alert(`"${product.name}" has been added to your cart`);
-        } else {
-          throw new Error(`Błąd podczas dodawania do koszyka: ${response.statusText}`);
-        }
-      })
-      .catch((error) => {
-        console.error('Błąd:', error);
+  const increaseQuantity = (productId: number) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [productId]: (prevQuantities[productId] || 0) + 1,
+    }));
+  };
+
+  const decreaseQuantity = (productId: number) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [productId]: Math.max((prevQuantities[productId] || 0) - 1, 0),
+    }));
+  };
+
+  const addToCart = async (product: Product) => {
+    const quantity = quantities[product.product_id] || 0;
+
+    if (quantity <= 0) {
+      Alert.alert('Enter amount greater than 0');
+      return;
+    }
+
+    if (product.amount < quantity) {
+      Alert.alert(`Available amount for product "${product.name}" is ${product.amount}`);
+      return;
+    }
+
+    try {
+      const carts = await fetch(`http://localhost:3000/carts`);
+      const cartsData = await carts.json();
+      const userId = await getAppData('userId');
+      const userCart = cartsData.find((cart: CartModel) => cart.user_id === userId);
+
+      const newCartItem = {
+        cart_id: userCart.cart_id,
+        product_id: product.product_id,
+        quantity: quantity,
+      };
+
+      const response = await fetch('http://localhost:3000/cart-items', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newCartItem),
       });
-  }
+
+      if (response.ok) {
+        Alert.alert(`"${product.name}" has been added to your cart`);
+      } else {
+        throw new Error(`Błąd podczas dodawania do koszyka: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error('Błąd:', error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -109,9 +150,25 @@ export default function Products() {
               <Text style={styles.productText}>{product.name}</Text>
             </View>
             <Text style={styles.productText}>{product.price + ' $ / ' + getUnitSymbol(product.unit_id)}</Text>
-            <Text style={styles.productText} onPress={() => addToCart(product)}>
-              <Feather name="plus-square" size={26} color="#013b3d" style={styles.searchIcon} />
-            </Text>
+            <View style={styles.quantityContainer}>
+              <TouchableOpacity onPress={() => decreaseQuantity(product.product_id)}>
+                <Feather name="minus" size={26} color="#013b3d" />
+              </TouchableOpacity>
+              <TextInput
+                style={styles.quantityInput}
+                keyboardType="numeric"
+                value={(quantities[product.product_id] || 0).toString()}
+                selectionColor="#013b3d"
+                onChangeText={(text) => handleQuantityChange(product.product_id, Number(text))}
+              />
+              <TouchableOpacity onPress={() => increaseQuantity(product.product_id)}>
+                <Feather name="plus" size={26} color="#013b3d" />
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity style={styles.addButton} onPress={() => addToCart(product)}>
+              <Feather name="shopping-cart" size={16} color="#fff" />
+              <Text style={styles.addButtonText}>Add</Text>
+            </TouchableOpacity>
           </View>
         ))}
       </ScrollView>
@@ -152,6 +209,9 @@ const styles = StyleSheet.create({
     marginTop: 80,
     marginHorizontal: 50,
   },
+  scrollView: {
+    flex: 1,
+  },
   searchInput: {
     flex: 1,
     fontSize: 20,
@@ -171,37 +231,71 @@ const styles = StyleSheet.create({
   },
   gridItem: {
     width: 150,
-    height: 150,
+    height: 180,
     margin: 15,
     backgroundColor: '#e8fefd',
-    justifyContent: 'center',
+    borderRadius: 10,
+    padding: 10,
+    justifyContent: 'space-around',
     alignItems: 'center',
-    borderRadius: 15,
   },
   productNameContainer: {
-    height: 55,
+    height: 70,
     justifyContent: 'center',
     alignItems: 'center',
   },
   productText: {
     fontSize: 18,
-    color: '#013b3d',
     fontWeight: '600',
-    padding: 5,
-    paddingHorizontal: 15,
+    color: '#013b3d',
     textAlign: 'center',
+  },
+  quantityContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 5,
+  },
+  quantityInput: {
+    borderWidth: 1,
+    borderColor: '#013b3d',
+    backgroundColor: '#e8fefd',
+    borderRadius: 10,
+    textAlign: 'center',
+    width: 50,
+    height: 30,
+    marginHorizontal: 10,
+    marginTop: 10,
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#013b3d',
+  },
+  addButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#013b3d',
+    borderRadius: 15,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    marginTop: 15,
+    marginBottom: 5,
+  },
+  addButtonText: {
+    fontSize: 16,
+    color: '#e8fefd',
+    marginLeft: 8,
   },
   navbar: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginHorizontal: 40,
+    marginHorizontal: 30,
     paddingBottom: 50,
     paddingTop: 30,
   },
   navButton: {
     alignItems: 'center',
     backgroundColor: '#e8fefd',
-    marginHorizontal: 15,
     padding: 15,
     borderRadius: 15,
     width: 66,

@@ -2,9 +2,10 @@ import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { Feather, FontAwesome, FontAwesome5, FontAwesome6 } from '@expo/vector-icons';
 import { useNavigation, useRouter } from 'expo-router';
-import { CartItem } from '../models/CartItem';
-import { Product } from '../models/Product';
-import { Unit } from '../models/Unit';
+import { CartItem } from '../models/cartItem.model';
+import { Product } from '../models/product.model';
+import { CartModel } from '../models/cart.model';
+import { Unit } from '../models/unit.model';
 import { useGetAppData } from '../hooks/useGetAppData';
 import { Screens } from '../enum/screens';
 import { useHandleRouteChange } from '../hooks/useHandleRouteChange';
@@ -28,15 +29,24 @@ export default function Cart() {
   }, [navigation]);
 
   useEffect(() => {
-    const setCartItemsByCart = async (cartId: number = 1) => {
+    const setCartItemsByCart = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/cart-items`);
-        const data = await response.json();
-        const userCartItems = data.filter((cartItem: CartItem) => cartItem.cart_id === cartId);
+        const carts = await fetch(`http://localhost:3000/carts`);
+        const cartsData = await carts.json();
+        const userId = await getAppData('userId');
+        const userCart = cartsData.find((cart: CartModel) => cart.user_id === userId);
 
-        setCartItems(userCartItems);
+        try {
+          const response = await fetch(`http://localhost:3000/cart-items`);
+          const data = (await response.json()) || [];
+          const userCartItems = data?.filter((cartItem: CartItem) => cartItem.cart_id === userCart.cart_id);
+
+          setCartItems(userCartItems);
+        } catch (error) {
+          console.error('Błąd podczas pobierania produktów z koszyka:', error);
+        }
       } catch (error) {
-        console.error('Błąd podczas pobierania produktów z koszyka:', error);
+        console.error('Błąd podczas przypisywania koszyka: ', error);
       }
     };
 
@@ -57,11 +67,11 @@ export default function Cart() {
   useEffect(() => {
     const setProductsByCart = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/products`);
-        const data = await response.json();
+        const products = await fetch(`http://localhost:3000/products`);
+        const productsData = await products.json();
 
         const filteredCartProducts: Product[] = cartItems.map((cartItem: CartItem) => {
-          return data.find((product: Product) => product.product_id === cartItem.product_id);
+          return productsData.find((product: Product) => product.product_id === cartItem.product_id);
         });
 
         setCartProducts(filteredCartProducts);
@@ -114,6 +124,13 @@ export default function Cart() {
     return productUnit ? productUnit.unit_symbol : '-';
   };
 
+  const getProductFullPrice = (product: Product) => {
+    const productAmount = cartItems.find((cartIem: CartItem) => cartIem.product_id === product.product_id)?.quantity;
+    const totalPrice = productAmount ? productAmount * product.price : '-';
+
+    return totalPrice;
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
@@ -127,9 +144,9 @@ export default function Cart() {
             <View style={styles.productNameContainer}>
               <Text style={styles.productName}>{product.name}</Text>
             </View>
-            <Text style={styles.productText}>{product.price + ' $ / ' + getUnitSymbol(product.unit_id)}</Text>
+            <Text style={styles.productText}>{getProductFullPrice(product) + ' $'}</Text>
             <Text style={styles.productText} onPress={() => removeFromCart(product)}>
-              <Feather name="x-square" size={26} color="#013b3d" style={styles.searchIcon} />
+              <Feather name="trash" size={26} color="#013b3d" style={styles.searchIcon} />
             </Text>
           </View>
         ))}
@@ -224,7 +241,7 @@ const styles = StyleSheet.create({
   navbar: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginHorizontal: 40,
+    marginHorizontal: 30,
     paddingBottom: 50,
     paddingTop: 30,
   },
