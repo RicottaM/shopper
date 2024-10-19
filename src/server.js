@@ -2,13 +2,14 @@ import express from 'express';
 import 'dotenv/config';
 import cookieParser from 'cookie-parser';
 import { DatabaseConnector } from './db/connect.js';
-import { authRouter } from './api/auth/auth.router.js';  // Import the new authRouter
+import { authRouter } from './api/auth/auth.router.js';
 import { userRouter } from './api/users/user.router.js';
 import { productRouter } from './api/products/product.router.js';
 import { categoryRouter } from './api/categories/category.router.js';
 import { sectionRouter } from './api/sections/section.router.js';
 import { cartItemRouter } from './api/cartItems/cartItem.router.js';
 import { cartRouter } from './api/carts/cart.router.js';
+import { storeRouter } from './api/stores/store.router.js';
 import { errorHandler } from './error/error-handler.js';
 
 const app = express();
@@ -29,6 +30,7 @@ app.use('/categories', categoryRouter);
 app.use('/sections', sectionRouter);
 app.use('/cart-items', cartItemRouter);
 app.use('/carts', cartRouter);
+app.use('/stores', storeRouter);
 
 app.use(errorHandler);
 
