@@ -98,13 +98,13 @@ export const userService = {
     // Find user
     const user = await client.query('SELECT * FROM users WHERE email = $1', [email]);
     if (user.rows.length === 0) {
-      throw new ErrorWithStatus('Invalid credentials', 401);
+      throw new ErrorWithStatus('Invalid mail', 401);
     }
 
     // Check password
     const isValidPassword = await bcrypt.compare(password, user.rows[0].password);
     if (!isValidPassword) {
-      throw new ErrorWithStatus('Invalid credentials', 401);
+      throw new ErrorWithStatus('Invalid password', 401);
     }
 
     // Generate token
