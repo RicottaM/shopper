@@ -1,34 +1,79 @@
-import React, { useLayoutEffect } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import { useRouter } from 'expo-router';
-import { useHandleRouteChange } from '../hooks/useHandleRouteChange';
+import React, { useLayoutEffect, useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, PermissionsAndroid, Platform } from 'react-native';
+import { BleManager, Device } from 'react-native-ble-plx';
 
 export default function Navigation() {
-  const router = useRouter();
-  const navigation = useNavigation();
-
-  const handleRoutePress = useHandleRouteChange();
+  const [devices, setDevices] = useState<Device[]>([]);
+  const manager = new BleManager();
 
   useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: false,
+    const requestPermissions = async () => {
+      if (Platform.OS === 'android') {
+        try {
+          const granted = await PermissionsAndroid.requestMultiple([
+            PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN,
+            PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT,
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          ]);
+
+          // if (
+          //   granted['android.permission.BLUETOOTH_SCAN'] !== PermissionsAndroid.RESULTS.GRANTED ||
+          //   granted['android.permission.BLUETOOTH_CONNECT'] !== PermissionsAndroid.RESULTS.GRANTED ||
+          //   granted['android.permission.ACCESS_FINE_LOCATION'] !== PermissionsAndroid.RESULTS.GRANTED
+          // ) {
+          //   console.error('Bluetooth permissions not granted');
+          // } else {
+          //   console.log('Bluetooth permissions granted');
+          // }
+        } catch (err) {
+          console.error('Failed to request permissions', err);
+        }
+      }
+    };
+
+    requestPermissions();
+  }, []);
+
+  const startScan = () => {
+    setDevices([]);
+    manager.startDeviceScan(null, null, (error, device) => {
+      if (error) {
+        console.error(error);
+        return;
+      }
+      if (device) {
+        setDevices((prevDevices) => {
+          if (!prevDevices.some((d) => d.id === device.id)) {
+            return [...prevDevices, device];
+          }
+          return prevDevices;
+        });
+      }
     });
-  }, [navigation]);
+
+    // Stop scanning after 10 seconds
+    setTimeout(() => {
+      manager.stopDeviceScan();
+    }, 10000);
+  };
 
   return (
     <View style={styles.container}>
-      <Image source={require('../../assets/images/logo.png')} style={styles.logo} />
-
-      <Text style={styles.header}>Welcome to Shopper</Text>
-
-      <Text style={styles.paragraph}>Fill your cart, follow the trail, and make your shopping faster!</Text>
-
-      <TouchableOpacity style={styles.button} onPress={() => router.push('/')}>
-        <Text style={styles.buttonText}>Get Started</Text>
-        <AntDesign name="right" size={24} style={styles.icon} />
+      <TouchableOpacity style={styles.button} onPress={startScan}>
+        <Text style={styles.buttonText}>Scan for Devices</Text>
       </TouchableOpacity>
+
+      <FlatList
+        data={devices}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.device}>
+            <Text style={styles.deviceText}>Name: {item.name || 'Unnamed Device'}</Text>
+            <Text style={styles.deviceText}>MAC: {item.id}</Text>
+            <Text style={styles.deviceText}>RSSI: {item.rssi}</Text>
+          </View>
+        )}
+      />
     </View>
   );
 }
@@ -38,34 +83,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#a0cbb3',
-  },
-  logo: {
-    width: 230,
-    height: 230,
-    borderRadius: 115,
-    marginTop: 170,
-  },
-  header: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: '#013b3d',
-    marginTop: 70,
-  },
-  paragraph: {
-    fontSize: 20,
-    marginHorizontal: 20,
-    color: '#013b3d',
-    textAlign: 'center',
-    marginTop: 30,
-    paddingHorizontal: 20,
+    padding: 20,
   },
   button: {
-    flexDirection: 'row',
-    alignItems: 'center',
     backgroundColor: '#e8fefd',
     paddingVertical: 20,
     paddingHorizontal: 24,
-    marginTop: 100,
+    marginTop: 20,
     borderRadius: 25,
   },
   buttonText: {
@@ -73,9 +97,14 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#013b3d',
   },
-  icon: {
-    marginTop: 2,
-    marginLeft: 6,
+  device: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    width: '100%',
+  },
+  deviceText: {
+    fontSize: 16,
     color: '#013b3d',
   },
 });
