@@ -6,7 +6,7 @@ import positionService from '../services/PositionService';
 import { ScannedDevice } from '../types/ScannedDevice';
 
 export default function BluetoothScanner() {
-  const { devices, isScanning, scanDevices } = useBluetoothService();
+  const { devices, isScanning, scanDevices, position } = useBluetoothService(); // Pobieramy position
   const [currentLocation, setCurrentLocation] = useState<number | null>(null);
 
   useEffect(() => {
@@ -27,7 +27,16 @@ export default function BluetoothScanner() {
   return (
     <View style={styles.container}>
       <Button title={isScanning ? 'Stop Scanning' : 'Start Scanning'} onPress={scanDevices} />
-      <Text style={styles.locationText}>Current Location: {currentLocation}</Text>
+      
+      {/* Wyświetlamy aktualną pozycję x, y */}
+      {position ? (
+        <Text style={styles.locationText}>
+          Current Position: x = {position.x.toFixed(2)}, y = {position.y.toFixed(2)}
+        </Text>
+      ) : (
+        <Text style={styles.locationText}>Calculating position...</Text>
+      )}
+
       <FlatList
         data={devices}
         keyExtractor={(item) => item.device.id}
@@ -35,6 +44,8 @@ export default function BluetoothScanner() {
           <View style={styles.deviceItem}>
             <Text style={styles.deviceName}>{item.device.name ?? 'Unnamed Device'}</Text>
             <Text>RSSI: {item.filteredRssi.toFixed(2)}</Text>
+            {/* Zamiast adresu MAC wyświetlamy ID beacona */}
+            <Text style={{ color: 'gray' }}>ID: {item.id}</Text>
           </View>
         )}
       />

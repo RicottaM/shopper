@@ -1,33 +1,118 @@
 // src/hooks/useBluetoothService.ts
+
 import { useState, useEffect, useRef } from 'react';
-import { Device } from 'react-native-ble-plx';
 import { Platform, PermissionsAndroid } from 'react-native';
 import { ScannedDevice } from '../types/ScannedDevice';
-import positionService from '../services/PositionService';
-import bleManager from '../BleManagerInstance'; // Importuj singletons
+import bleManager from '../BleManagerInstance';
+import { Matrix, add, multiply, subtract, inv, identity, matrix, transpose } from 'mathjs';
+import { BEACON_POSITIONS } from '../constants';
+import { BEACON_IDS } from '../constants';
+
+interface PointWithRadius {
+    x: number;
+    y: number;
+    r: number;
+}
 
 export function useBluetoothService() {
     const [devices, setDevices] = useState<ScannedDevice[]>([]);
     const [isScanning, setIsScanning] = useState<boolean>(false);
+    const [position, setPosition] = useState<{ x: number; y: number } | null>(null);
     const deviceSetRef = useRef<Set<string>>(new Set());
     const scanIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-    // Kalman filter variables
-    const rssiMeasurementsRef = useRef<{ [key: string]: number[] }>({});
-    const kalmanStateRef = useRef<{ [key: string]: number }>({});
-    const kalmanCovarianceRef = useRef<{ [key: string]: number }>({});
-    const processNoise = 0.008; // process noise covariance
-    const measurementNoise = 1; // measurement noise covariance
+    // Stan filtra Kalmana
+    const kalmanFilterState = useRef<{
+        x: Matrix; // Wektor stanu [x, y]^T
+        P: Matrix; // Macierz kowariancji
+    }>({
+        x: matrix([[0], [0]]) as Matrix,
+        P: identity(2) as Matrix,
+    });
 
-    const macToNameMapping: { [key: string]: number } = {
-        '0C:B2:B7:45:BB:B2': 1,
-        'FC:45:C3:A2:F8:6A': 2,
-        'FC:45:C3:91:24:02': 3,
-        'E0:E5:CF:38:7B:FB': 4,
-        '3C:A3:08:0D:16:06': 5,
-        '34:15:13:DF:BF:1F': 6,
-        '88:3F:4A:E9:20:7D': 7,
+    const rssiToDistance = (rssi: number, txPower: number = -59, n: number = 4): number => {
+        return Math.pow(10, (txPower - rssi) / (10 * n));
     };
+
+    const trilaterate = (
+        p1: PointWithRadius,
+        p2: PointWithRadius,
+        p3: PointWithRadius
+    ): { x: number; y: number } | null => {
+        const A = 2 * (p2.x - p1.x);
+        const B = 2 * (p2.y - p1.y);
+        const C =
+            p1.r ** 2 -
+            p2.r ** 2 -
+            p1.x ** 2 +
+            p2.x ** 2 -
+            p1.y ** 2 +
+            p2.y ** 2;
+        const D = 2 * (p3.x - p2.x);
+        const E = 2 * (p3.y - p2.y);
+        const F =
+            p2.r ** 2 -
+            p3.r ** 2 -
+            p2.x ** 2 +
+            p3.x ** 2 -
+            p2.y ** 2 +
+            p3.y ** 2;
+
+        const denominator = A * E - B * D;
+        if (denominator === 0) {
+            // Brak rozwiązania
+            return null;
+        }
+
+        const x = (C * E - B * F) / denominator;
+        const y = (A * F - C * D) / denominator;
+
+        return { x, y };
+    };
+
+
+    const applyKalmanFilterToPosition = (
+        measurement: { x: number; y: number }
+    ): { x: number; y: number } => {
+        const state = kalmanFilterState.current;
+
+        // Macierz przejścia stanu (A)
+        const A = identity(2) as Matrix;
+        const H = identity(2) as Matrix; // Macierz obserwacji
+        const Q = multiply(identity(2), 0.1) as Matrix; // Szum procesu
+        const R = multiply(identity(2), 5) as Matrix;   // Szum pomiaru
+
+        // Predykcja
+        const x_pred = multiply(A, state.x) as Matrix;
+        const P_pred = add(multiply(multiply(A, state.P), transpose(A)), Q) as Matrix;
+
+        // Pomiar
+        const z = matrix([[measurement.x], [measurement.y]]) as Matrix;
+
+        // Innowacja
+        const y = subtract(z, multiply(H, x_pred)) as Matrix;
+        const S = add(multiply(multiply(H, P_pred), transpose(H)), R) as Matrix;
+
+        // Wzmocnienie Kalmana
+        const K = multiply(multiply(P_pred, transpose(H)), inv(S)) as Matrix;
+
+        // Aktualizacja stanu
+        const x_updated = add(x_pred, multiply(K, y)) as Matrix;
+        const P_updated = multiply(subtract(identity(2), multiply(K, H)), P_pred) as Matrix;
+
+        // Zapisz zaktualizowany stan
+        kalmanFilterState.current = {
+            x: x_updated,
+            P: P_updated,
+        };
+
+        // Zwróć estymowaną pozycję
+        return {
+            x: x_updated.get([0, 0]),
+            y: x_updated.get([1, 0]),
+        };
+    };
+
 
     const scanDevices = async () => {
         if (isScanning) {
@@ -67,16 +152,17 @@ export function useBluetoothService() {
                     return;
                 }
 
-                if (scannedDevice && scannedDevice.name === 'HMSoft') {
+                if (scannedDevice && BEACON_POSITIONS[scannedDevice.id]) {
                     const uuid = scannedDevice.id;
+                    const beaconId = BEACON_IDS[uuid];
+
                     if (!deviceSetRef.current.has(uuid)) {
                         deviceSetRef.current.add(uuid);
                         setDevices((prevDevices) => [
                             ...prevDevices,
-                            { device: scannedDevice, filteredRssi: scannedDevice.rssi ?? 0 },
+                            { device: scannedDevice, filteredRssi: scannedDevice.rssi ?? 0, id: beaconId }, // Używamy beaconId
                         ]);
                     } else {
-                        // Aktualizuj RSSI
                         setDevices((prevDevices) =>
                             prevDevices.map((scanned) =>
                                 scanned.device.id === uuid
@@ -84,10 +170,6 @@ export function useBluetoothService() {
                                     : scanned,
                             ),
                         );
-                    }
-
-                    if (scannedDevice.rssi !== null) {
-                        applyKalmanFilter(uuid, scannedDevice.rssi);
                     }
                 }
             });
@@ -98,59 +180,40 @@ export function useBluetoothService() {
                         return (b.filteredRssi ?? 0) - (a.filteredRssi ?? 0);
                     });
 
-                    if (sortedDevices.length >= 1) {
-                        const topDevice = sortedDevices[0];
-                        const mappedName = macToNameMapping[topDevice.device.id];
-                        if (mappedName !== undefined) {
-                            positionService.updateLocation(mappedName);
+                    const topDevices = sortedDevices
+                        .filter(device => BEACON_POSITIONS[device.device.id])
+                        .slice(0, 3);
+
+                    if (topDevices.length >= 3) {
+                        const distances = topDevices.map((device) => {
+                            const beaconPosition = BEACON_POSITIONS[device.device.id];
+                            const distance = rssiToDistance(device.filteredRssi);
+                            return { x: beaconPosition.x, y: beaconPosition.y, r: distance };
+                        });
+
+                        const [p1, p2, p3] = distances;
+
+                        const estimatedPosition = trilaterate(p1, p2, p3);
+
+                        if (estimatedPosition) {
+                            const filteredPosition = applyKalmanFilterToPosition(estimatedPosition);
+                            setPosition(filteredPosition);
+                            // Opcjonalnie zaktualizuj positionService
+                            // positionService.updateLocation(filteredPosition);
                         }
                     }
 
                     return sortedDevices;
                 });
-            }, 500);
+            }, 1000);
 
             setIsScanning(true);
         }
     };
 
-    const applyKalmanFilter = (uuid: string, rssi: number) => {
-        if (kalmanStateRef.current[uuid] === undefined) {
-            // Initialize Kalman filter state and covariance if not already present
-            kalmanStateRef.current[uuid] = rssi;
-            kalmanCovarianceRef.current[uuid] = 1;
-            rssiMeasurementsRef.current[uuid] = [];
-        }
-
-        // Add new RSSI measurement to history
-        rssiMeasurementsRef.current[uuid].push(rssi);
-
-        // Prediction step
-        let predictedState = kalmanStateRef.current[uuid];
-        let predictedCovariance = kalmanCovarianceRef.current[uuid] + processNoise;
-
-        // Measurement update step
-        let kalmanGain = predictedCovariance / (predictedCovariance + measurementNoise);
-        let updatedState = predictedState + kalmanGain * (rssi - predictedState);
-        let updatedCovariance = (1 - kalmanGain) * predictedCovariance;
-
-        // Update the Kalman filter state and covariance
-        kalmanStateRef.current[uuid] = updatedState;
-        kalmanCovarianceRef.current[uuid] = updatedCovariance;
-
-        // Update RSSI value in the devices array with the filtered value
-        setDevices((prevDevices) =>
-            prevDevices.map((scanned) =>
-                scanned.device.id === uuid
-                    ? { ...scanned, filteredRssi: updatedState }
-                    : scanned,
-            ),
-        );
-    };
-
     useEffect(() => {
         return () => {
-            // Cleanup podczas odmontowywania komponentu
+            // Cleanup przy odmontowaniu komponentu
             if (isScanning) {
                 bleManager.stopDeviceScan();
             }
@@ -158,7 +221,6 @@ export function useBluetoothService() {
                 clearInterval(scanIntervalRef.current);
                 scanIntervalRef.current = null;
             }
-            // Nie wywołuj bleManager.destroy()
         };
     }, []);
 
@@ -166,5 +228,6 @@ export function useBluetoothService() {
         devices,
         isScanning,
         scanDevices,
+        position,
     };
 }
