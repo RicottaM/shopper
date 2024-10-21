@@ -102,9 +102,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginHorizontal: 30,
-    paddingBottom: 50, // Odstęp od dołu
-    paddingTop: 30, // Wewnętrzny odstęp od góry
-    bottom: -635, // Pozycja navbaru
+    paddingBottom: 50,
+    paddingTop: 30,
+    bottom: -635,
   },
   navButton: {
     alignItems: 'center',
