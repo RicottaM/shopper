@@ -1,17 +1,11 @@
-// src/services/PositionService.ts
 import { BehaviorSubject } from 'rxjs';
 
-interface Position {
-    x: number;
-    y: number;
-}
-
 class PositionService {
-    private currentLocationSubject = new BehaviorSubject<Position | null>(null);
-    public currentLocation$ = this.currentLocationSubject.asObservable();
+    private currentLocationSubject = new BehaviorSubject<number | null>(null);
+    currentLocation$ = this.currentLocationSubject.asObservable();
 
-    updatePosition(position: Position) {
-        this.currentLocationSubject.next(position);
+    updateLocation(location: number) {
+        this.currentLocationSubject.next(location);
     }
 }
 

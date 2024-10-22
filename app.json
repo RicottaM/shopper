@@ -24,10 +24,9 @@
       "package": "com.anonymous.Shopper",
       "permissions": [
         "BLUETOOTH",
-        "BLUETOOTH_ADMIN",
         "ACCESS_FINE_LOCATION",
-        "BLUETOOTH_SCAN",
-        "BLUETOOTH_CONNECT"
+        "BLUETOOTH_SCAN"
+        
       ]
     },
     "web": {
