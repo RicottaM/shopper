@@ -3,11 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { View, Button, FlatList, Text, StyleSheet } from 'react-native';
 import { useBluetoothService } from '../hooks/useBluetoothService';
 import positionService from '../services/PositionService';
-import { ScannedDevice } from '../types/ScannedDevice';
 
 export default function BluetoothScanner() {
   const { devices, isScanning, scanDevices, position } = useBluetoothService(); // Pobieramy position
-  const [currentLocation, setCurrentLocation] = useState<number | null>(null);
+  const [currentLocation, setCurrentLocation] = useState<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
     const subscription = positionService.currentLocation$.subscribe(
