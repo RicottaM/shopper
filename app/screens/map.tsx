@@ -1,5 +1,5 @@
-import React, { useLayoutEffect, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text, Button, Alert } from 'react-native';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { View, StyleSheet, TouchableOpacity, Text, Alert } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -10,16 +10,16 @@ import { Store } from '../models/store.model';
 export default function Map() {
   const router = useRouter();
   const navigation = useNavigation();
-  const saveAppData = useSaveAppData();
-
+  const [stores, setStores] = useState<Store[]>([]);
   const [selectedStore, setSelectedStore] = useState<Store>();
+  const [initialRegion, setInitialRegion] = useState({
+    latitude: 52.2297,
+    longitude: 21.0122,
+    latitudeDelta: 0.05,
+    longitudeDelta: 0.05,
+  });
 
-  // narazie sztywno stad
-  const stores: Store[] = [
-    { store_id: 1, store_name: 'Castorama', latitude: '52.2297', longitude: '21.0122', city: 'Warsaw' },
-    { store_id: 2, store_name: 'Pepco', latitude: '52.237', longitude: '21.0175', city: 'Warsaw' },
-    { store_id: 3, store_name: 'Obi', latitude: '52.239', longitude: '21.0155', city: 'Warsaw' },
-  ];
+  const saveAppData = useSaveAppData();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -29,8 +29,36 @@ export default function Map() {
 
   const handleSelectStore = async (storeId: number) => {
     await saveAppData('selectedStoreId', storeId.toString(), 7);
-    Alert.alert(`Store has been selected succesfully`);
+    Alert.alert(`Store has been selected successfully`);
   };
+
+  useEffect(() => {
+    const fetchStores = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/stores');
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data: Store[] = await response.json();
+        setStores(data);
+
+        if (data.length > 0) {
+          setInitialRegion({
+            latitude: parseFloat(data[0].latitude),
+            longitude: parseFloat(data[0].longitude),
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.05,
+          });
+        }
+      } catch (error) {
+        console.log('Fetching stores failed.');
+      }
+    };
+
+    fetchStores();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -38,15 +66,7 @@ export default function Map() {
         <MaterialIcons name="arrow-back-ios" size={32} color="#013b3d" />
       </TouchableOpacity>
 
-      <MapView
-        style={styles.map}
-        initialRegion={{
-          latitude: 52.2297,
-          longitude: 21.0122,
-          latitudeDelta: 0.05,
-          longitudeDelta: 0.05,
-        }}
-      >
+      <MapView style={styles.map} region={initialRegion}>
         {stores.map((store: Store) => (
           <Marker
             key={store.store_id}
@@ -105,7 +125,7 @@ const styles = StyleSheet.create({
   selectButton: {
     backgroundColor: '#013b3d',
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
     alignItems: 'center',
   },
   selectButtonText: {
